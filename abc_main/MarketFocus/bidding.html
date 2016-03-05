@@ -1,0 +1,313 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript">
+        var result_global="";
+        var count=0;
+        var b_or_c=0;
+        var args=new Array();
+        args['低']=5;
+        args['次低']=4;
+        args['中']=3;
+        args['次高']=2;
+        args['高']=1;
+        var ar=new Array();
+        var temp_ar=new Array();
+        var finan_current=0,sale_current=0,human_current=0,research_current=0;
+        $(document).ready(function(){
+            var url=unescape(window.location.toString());
+            var temp=url.split("?")[1];
+            var arr=temp.split("@");
+            for(var index in arr){
+			//alert("in for loop"); //ok
+                var arrs=arr[index].split("|");
+                temp_ar[index]=arrs[6];
+                b_or_c=arrs[7];
+                if(b_or_c==0)
+                    $("#main").append("<div id='d' class='drag'>"+arrs[0]+"<div class='comment'>"+arrs[2]+"<br/>"+arrs[3]+"<br/>"+arrs[4]+"</div></div>");
+                else
+                    $("#main").append("<div id='d' class='drag'>"+arrs[0]+"<div class='comment'>"+arrs[2]+"<br/>"+arrs[3]+"<br/>"+arrs[4]+"<br/>等級： "+arrs[6]+"</div></div>");
+                ar[index]=arrs[5].split(" ")[1];
+                no=arrs[1].split(" ")[1];
+                $("#choice").append("<tr><th id='name_"+index+"'>"+arrs[0]+"</th><td><div align='center' id='no_"+index+"'>"+no+"</div></td><td><div align='center'><input type='image' src='../images/sub.png' id='subq_"+index+"'><span id='q_"+index+"'>中</span><input type='image' src='../images/add.png' id='addq_"+index+"'></div></td><td><div align='center'><input type='image' src='../images/sub.png' id='subs_"+index+"'><span id='s_"+index+"'>中</span><input type='image' src='../images/add.png' id='adds_"+index+"'></div></td><td><div align='center'><input type='image' src='../images/sub.png' id='subm_"+index+"'><span id='m_"+index+"'>40000</span><input type='image' src='../images/add.png' id='addm_"+index+"'></div></td></tr>");
+
+                document.getElementById("subq_"+index).onclick=function(){
+                    var i=this.id.split("_")[1];
+                    var str=document.getElementById("q_"+i).innerHTML;
+                    var integer=args[str];
+                    if(integer==5)
+                        alert("到達臨界值~!!");
+                    else{
+                        integer++;
+                        for(var i_m in args)
+                            if(args[i_m]==integer){
+                                integer=i_m;
+                                break;
+                            }
+                        document.getElementById("q_"+i).innerHTML=integer;
+                    }
+                }
+
+                document.getElementById("subs_"+index).onclick=function(){
+                    var i=this.id.split("_")[1];
+                    var str=document.getElementById("s_"+i).innerHTML;
+                    var integer=args[str];
+                    if(integer==5)
+                        alert("到達臨界值~!!");
+                    else{
+                        integer++;
+                        for(var i_m in args)
+                            if(args[i_m]==integer){
+                                integer=i_m;
+                                break;
+                            }
+                        document.getElementById("s_"+i).innerHTML=integer;
+                    }
+                }
+
+                document.getElementById("subm_"+index).onclick=function(){
+                    var i=this.id.split("_")[1];"C:/Users/KungYen/Downloads/103ABC_ver5/103ABC_ver5/testabc/abc_main/MarketFocus/order_B2C.html"
+                    var type=no.split("_")[1];
+                    var integer=parseInt(document.getElementById("m_"+i).innerHTML);
+                    if(type=="A"){
+                        if(integer==0)
+                            alert("沒得扣了喔~!!");
+                        else{
+                            integer-=500;
+                            document.getElementById("m_"+i).innerHTML=integer;
+                        }
+                    }
+                    else if(type=="B"){
+                        if(integer==0)
+                            alert("沒得扣了喔~!!");
+                        else{
+                            integer-=500;
+                            document.getElementById("m_"+i).innerHTML=integer;
+                        }
+                    }
+                }
+
+                document.getElementById("addq_"+index).onclick=function(){
+                    var i=this.id.split("_")[1];
+                    var str=document.getElementById("q_"+i).innerHTML;
+                    var integer=args[str];
+					var s_limit=0;
+					/*$.ajax({
+						url:"hire_process.php",
+						type: "GET",
+						asyc:false,
+						datatype: "html",
+						data: {type:"sale_service"},
+						success: function(str){
+							s_limit=parseInt(str);
+						}
+					});*/
+                    if(integer==1)
+                        alert("到達臨界值~!!");
+                    else{
+                        integer--;
+                        for(var i_m in args)
+                            if(args[i_m]==integer){
+                                integer=i_m;
+                                break;
+                            }
+                        document.getElementById("q_"+i).innerHTML=integer;
+                    }
+                }
+
+                document.getElementById("adds_"+index).onclick=function(){
+                    var i=this.id.split("_")[1];
+                    var str=document.getElementById("s_"+i).innerHTML;
+                    var integer=args[str];
+                    if(integer==1)
+                        alert("到達臨界值~!!");
+                    else{
+                        integer--;
+                        for(var i_m in args)
+                            if(args[i_m]==integer){
+                                integer=i_m;
+                                break;
+                            }
+                        document.getElementById("s_"+i).innerHTML=integer;
+                    }
+                }
+
+                document.getElementById("addm_"+index).onclick=function(){
+                    var i=this.id.split("_")[1];
+                    var integer=parseInt(document.getElementById("m_"+i).innerHTML);
+                    var type=no.split("_")[1];
+                    if(type=="A"){
+                        if(integer==40000)
+                            alert("到達臨界值~!!");
+                        else{
+                            integer+=500;
+                            document.getElementById("m_"+i).innerHTML=integer;
+                        }
+                    }
+                    else if(type=="B"){
+                        if(integer==20000)
+                            alert("到達臨界值~!!");
+                        else{
+                            integer+=500;
+                            document.getElementById("m_"+i).innerHTML=integer;
+                        }
+                    }
+                }
+                count++;
+            }
+        });
+
+        var transfer=function(){
+		//alert("Onclick"); //ok
+            for(var i=0;i<count;i++){
+                result_global+=document.getElementById("name_"+i).innerHTML+"@"+document.getElementById("no_"+i).innerHTML+"@"+document.getElementById("q_"+i).innerHTML+"@"+document.getElementById("s_"+i).innerHTML+"@"+document.getElementById("m_"+i).innerHTML+"@"+temp_ar[i]+"@"+b_or_c+"@"+ar[i]+"|";
+            //alert("in count loop");  //ok
+			}
+            result_global=result_global.substr(0,(result_global.length-1));
+            //alert(result_global);
+            $.ajax({
+                url: 'check_product_num.php',
+                type:'POST',
+                data:{
+                    type: '2',
+                    str: result_global
+                },
+                error:
+                    function(xhr) {alert('Ajax request 發生錯誤');},
+                success:
+                    function(str){
+                        if(str!=""){
+                            str=str.replace("^","\n");
+                            alert(str);
+                            result_global="";
+							
+                        }
+                        else{
+						//alert("go get count");
+                            getCount();
+                        }
+                    }
+                });
+        }
+
+        var check_again=function(){
+            $.ajax({
+                url: 'check_product_num.php',
+                type:'POST',
+                datatype: "html",
+                data:{
+                    type: 3,
+                    str: result_global,
+                    finan_count:finan_current,
+                    human_count:human_current,
+                    sale_count:sale_current,
+                    research_count:research_current
+                },
+                error:
+                    function(xhr) {alert('Ajax request 發生錯誤');},
+                success:
+                    function(str){
+                        if(str!=""){
+                            str=str.replace("^","\n");
+                            alert(str);
+                            result_global="";
+                        }
+                        else{
+                            jump();
+                        }
+                    }
+                });
+        }
+
+        function getCount(){
+        	$.ajax({
+        		url:"hire_check.php",
+        		type: "GET",
+        		async:false,
+        		datatype: "html",
+        		data: {type:"people"},
+        		success: function(str)
+        		{
+        			arr=str.split("|");
+        			finan_current = parseInt(arr[0]);       			
+                    sale_current  = parseInt(arr[1]);
+                    research_current = parseInt(arr[2]);
+                    human_current = parseInt(arr[3]);
+                    check_again();
+        		}
+        	}
+        			);
+        }
+
+        var jump=function(){
+            $.ajax({
+                url: 'bid_insert.php',
+                type:'GET',
+                data:{
+                    result: result_global
+                },
+                error:
+                    function(xhr) {alert('Ajax request 發生錯誤');},
+                success:
+                    function(str){
+                        alert("SUCCESS~!!");
+                        //window.location.href="taiwan_order.php";
+						window.location.href="order.html";
+                    }
+                });
+            result_global="";
+        }
+    </script>
+    <style type="text/css">
+        .drag    { position: absolute; }
+        #d        { left: 50px; top: 60px; width: 160px; filter: alpha(opacity=85,style=0); -moz-opacity: 0.85; opacity: 0.85; border: 1px solid #ccc; z-index: 3; background-color: #ffb; padding: 3px; }
+        .comment    { background-color: #fff; margin: 3px 0 0; }
+        th {width:160;}
+        td{width:160;align:center;}
+        span { display:-moz-inline-box; display:inline-block; width:50px;}
+    </style>
+    <script type="text/javascript"> 
+	var dragapproved = false;
+	var dragObj;
+	var zIndex = 3;
+	var offX,offY;
+	document.onmousedown = beginDrag;
+	document.onmouseup = function() {dragapproved = false};
+	document.onmousemove = dragDrop;
+	function dragDrop(evt) {
+	    if (dragapproved) {
+	        var e = evt || window.event;
+	        dragObj.style.left = e.clientX - offX + document.documentElement.scrollLeft + 'px';
+	        dragObj.style.top = e.clientY - offY + document.documentElement.scrollTop + 'px';
+	    }
+	}
+	function beginDrag(evt) {
+	    dragObj = window.event ? event.srcElement : evt.target;
+	    if (dragapproved == false && dragObj.className.indexOf("drag") >= 0) {
+	        dragObj.style.zIndex = zIndex++;
+	        offX = window.event ? event.offsetX : evt.layerX;
+	        offY = window.event ? event.offsetY : evt.layerY;
+	        dragapproved = true;
+	    }
+	    if (dragapproved == false && dragObj.className.indexOf("comment") >= 0) {
+	        dragapproved = false;
+	    }
+	}
+</script>
+  </head>
+  <body>
+      <div id="main">
+    </div>
+    <table id="choice" align="center">
+            <tr><th>&nbsp;</th><th>訂單編號</th><th>品質需求</th><th>服務需求</th><th>單價</th></tr>
+    </table>
+    <div align="center"><input type="image" src="../images/submit.png" onClick="javascript:transfer();"></div>
+  </body>
+</html>

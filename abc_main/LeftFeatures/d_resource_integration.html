@@ -1,0 +1,472 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="../js/progress-bar-pager/ext-all.css">
+        <link rel="stylesheet" type="text/css" href="../js/progress-bar-pager/ext-patch.css">
+        <script type="text/javascript" src="../js/jquery.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/ext-base.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/ext-all.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/ProgressBarPager.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/PanelResizer.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/PagingMemoryProxy.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var showed_buy=0,showed_sell=0,showed_money=0,showed_research=0,showed_pm=0;
+                $(".A").click(function(){
+                    if(showed_buy==0){
+                        if(showed_sell==1){
+                            display("sell","none");
+                        }
+                        if(showed_money==1){
+                            display("money","none");
+                        }
+                        if(showed_research==1){
+                            display("research","none");
+                        }
+                        if(showed_pm==1){
+                            display("pm","none");
+                        }
+                        show_buy();
+                        showed_buy=1;
+                    }else{
+                        if(showed_sell==1){
+                            display("sell","none");
+                        }
+                        if(showed_money==1){
+                            display("money","none");
+                        }
+                        if(showed_research==1){
+                            display("research","none");
+                        }
+                       if(showed_pm==1){
+                            display("pm","none");
+                        }
+                        display("buy","block");
+                    }
+                });
+                $(".B").click(function(){
+                    if(showed_sell==0){
+                        if(showed_buy==1){
+                            display("buy","none");
+                        }
+                        if(showed_money==1){
+                            display("money","none");
+                        }
+                        if(showed_research==1){
+                            display("research","none");
+                        }
+                        if(showed_pm==1){
+                            display("pm","none");
+                        }
+                        show_sell();
+                        showed_sell=1;
+                    }else{
+                        if(showed_buy==1){
+                            display("buy","none");
+                        }
+                        if(showed_money==1){
+                            display("money","none");
+                        }
+                        if(showed_research==1){
+                            display("research","none");
+                        }
+                        if(showed_pm==1){
+                            display("pm","none");
+                        }
+                        display("sell","block");
+                    }
+                });
+                $(".C").click(function(){
+                    if(showed_money==0){
+                        if(showed_buy==1){
+                            display("buy","none");
+                        }
+                        if(showed_sell==1){
+                            display("sell","none");
+                        }
+                        if(showed_research==1){
+                            display("research","none");
+                        }
+                        if(showed_pm==1){
+                            display("pm","none");
+                        }
+                        show_money();
+                        showed_money=1;
+                    }else{
+                        if(showed_buy==1){
+                            display("buy","none");
+                        }
+                        if(showed_sell==1){
+                            display("sell","none");
+                        }
+                        if(showed_research==1){
+                            display("research","none");
+                        }
+                        if(showed_pm==1){
+                            display("pm","none");
+                        }
+                        display("money","block");
+                    }
+                });
+                $(".D").click(function(){
+                    if(showed_research==0){
+                        if(showed_buy==1){
+                            display("buy","none");
+                        }
+                        if(showed_sell==1){
+                            display("sell","none");
+                        }
+                        if(showed_money==1){
+                            display("money","none");
+                        }
+                        if(showed_pm==1){
+                            display("pm","none");
+                        }
+                        show_research();
+                        showed_research=1;
+                    }else{
+                        if(showed_buy==1){
+                            display("buy","none");
+                        }
+                        if(showed_sell==1){
+                            display("sell","none");
+                        }
+                        if(showed_money==1){
+                            display("money","none");
+                        }
+                        if(showed_pm==1){
+                            display("pm","none");
+                        }
+                        display("research","block");
+                    }
+                });
+                $(".E").click(function(){
+                    if(showed_pm==0){
+                        if(showed_buy==1){
+                            display("buy","none");
+                        }
+                        if(showed_sell==1){
+                            display("sell","none");
+                        }
+                        if(showed_money==1){
+                            display("money","none");
+                        }
+						if(showed_research==1){
+							display("research","none");
+						}
+                        show_pm();
+                        showed_pm=1;
+                    }else{
+                        if(showed_buy==1){
+                            display("buy","none");
+                        }
+                        if(showed_sell==1){
+                            display("sell","none");
+                        }
+                        if(showed_money==1){
+                            display("money","none");
+                        }
+						if(showed_research==1){
+							display("research","none");
+						}
+                        display("pm","block");
+                    }
+                });
+
+                function display(id,method){
+                    var id=document.getElementById(id);
+                    id.style.display=method;
+                }
+            });
+            function show_buy(){
+
+                $.ajax({
+                    url: 'd_resource_integration.php',
+                    type:'GET',
+                    data: 'option=buy',
+                    error: function(xhr) {alert('Ajax request error');}, 
+                    success: function(str){
+                        var myData = eval('(' + str + ')');
+                        var store = new Ext.data.Store({
+                            proxy: new Ext.ux.data.PagingMemoryProxy(myData),
+                            remoteSort:true,
+                            reader: new Ext.data.ArrayReader({
+                                fields: [
+                                    {name: 'year'},
+                                    {name: 'month'},
+                                    {name: 'function'},
+                                    {name: 'type'},
+                                    {name: 'number'}
+                                ]
+                            })
+                        });
+                        // create the Grid
+                        var grid = new Ext.grid.GridPanel({
+                            store: store,
+                            columns: [
+                                {header: "年", width: 50, sortable: true, dataIndex: 'year'},
+                                {header: "月", width: 50, sortable: true, dataIndex: 'month'},
+                                {header: "機器功能", width: 150, sortable: true, dataIndex: 'function'},
+                                {header: "類型", width: 80, sortable: true, dataIndex: 'type'},
+                                {header: "購買數量", width: 100, sortable: true, dataIndex: 'number'}
+                            ],
+                            stripeRows: true,
+                            height:400,
+                            width:670,
+                            frame:true,
+                            title:'決策--購買機具',
+                            plugins: new Ext.ux.PanelResizer({
+                                minHeight: 100
+                            }),
+                            bbar: new Ext.PagingToolbar({
+                                pageSize: 10,
+                                store: store,
+                                displayInfo: true,
+                                plugins: new Ext.ux.ProgressBarPager()
+                            })
+                        });
+                        grid.render('buy');
+                        store.load({params:{start:0, limit:10}});
+                    }
+                });
+            };
+            function show_sell(){
+
+                $.ajax({
+                    url: 'd_resource_integration.php',
+                    type:'GET',
+                    data: 'option=sell',
+                    error: function(xhr) {alert('Ajax request error');}, 
+                    success: function(str){
+                        var myData = eval('(' + str + ')');
+                        var store = new Ext.data.Store({
+                            proxy: new Ext.ux.data.PagingMemoryProxy(myData),
+                            remoteSort:true,
+                            reader: new Ext.data.ArrayReader({
+                                fields: [
+                                    {name: 'year'},
+                                    {name: 'month'},
+                                    {name: 'function'},
+                                    {name: 'type'},
+                                    {name: 'number'}
+                                ]
+                            })
+                        });
+                        // create the Grid
+                        var grid = new Ext.grid.GridPanel({
+                            store: store,
+                            columns: [
+                                {header: "年", width: 50, sortable: true, dataIndex: 'year'},
+                                {header: "月", width: 50, sortable: true, dataIndex: 'month'},
+                                {header: "機器功能", width: 150, sortable: true, dataIndex: 'function'},
+                                {header: "類型", width: 80, sortable: true, dataIndex: 'type'},
+                                {header: "販售數量", width: 100, sortable: true, dataIndex: 'number'}
+                            ],
+                            stripeRows: true,
+                            height:400,
+                            width:670,
+                            frame:true,
+                            title:'決策--販售機器',
+                            plugins: new Ext.ux.PanelResizer({
+                                minHeight: 100
+                            }),
+                            bbar: new Ext.PagingToolbar({
+                                pageSize: 10,
+                                store: store,
+                                displayInfo: true,
+                                plugins: new Ext.ux.ProgressBarPager()
+                            })
+                        });
+                        grid.render('sell');
+                        store.load({params:{start:0, limit:10}});
+                    }
+                });
+            };
+            function show_money(){
+                $.ajax({
+                    url: 'd_resource_integration.php',
+                    type:'GET',
+                    data: 'option=money',
+                    error: function(xhr) {alert('Ajax request error');}, 
+                    success: function(str){
+                        myData = eval('(' + str + ')');
+                        var store = new Ext.data.Store({
+                            proxy: new Ext.ux.data.PagingMemoryProxy(myData),
+                            remoteSort:true,
+                            reader: new Ext.data.ArrayReader({
+                                fields: [
+                                    {name: 'year'},
+                                    {name: 'month'},
+                                    {name: 'type'},
+                                    {name: 'number'}
+                                ]
+                            })
+                        });
+                        // create the Grid
+                        var grid = new Ext.grid.GridPanel({
+                            store: store,
+                            columns: [
+                                {header: "年", width: 50, sortable: true, dataIndex: 'year'},
+                                {header: "月", width: 50, sortable: true, dataIndex: 'month'},
+                                {header: "決策類型", width: 150, sortable: true, dataIndex: 'type'},
+                                {header: "金額", width: 100, sortable: true, dataIndex: 'number'}
+                            ],
+                            stripeRows: true,
+                            height:400,
+                            width:670,
+                            frame:true,
+                            title:'決策--資金募集',
+                            plugins: new Ext.ux.PanelResizer({
+                                minHeight: 100
+                            }),
+                            bbar: new Ext.PagingToolbar({
+                                pageSize: 10,
+                                store: store,
+                                displayInfo: true,
+                                plugins: new Ext.ux.ProgressBarPager()
+                            })
+                        });
+                        grid.render('money');
+                        store.load({params:{start:0, limit:10}});
+                    }
+                });
+            };
+            function show_research(){
+                $.ajax({
+                    url: 'd_resource_integration.php',
+                    type:'GET',
+                    data: 'option=research',
+                    error: function(xhr) {alert('Ajax request error');}, 
+                    success: function(str){
+                        var myData = eval('(' + str + ')');
+                        var store = new Ext.data.Store({
+                            proxy: new Ext.ux.data.PagingMemoryProxy(myData),
+                            remoteSort:true,
+                            reader: new Ext.data.ArrayReader({
+                                fields: [
+                                    {name: 'year'},
+                                    {name: 'month'},
+                                    {name: 'product'},
+                                    {name: 'resource'},
+                                    {name: 'supplier'},
+                                    {name: 'price'},
+                                    {name: 'num'}
+                                    
+                                ]
+                            })
+                        });
+
+                        // create the Grid
+                        var grid = new Ext.grid.GridPanel({
+                            store: store,
+                            columns: [
+                                {header: "年", width: 50, sortable: true, dataIndex: 'year'},
+                                {header: "月", width: 50, sortable: true, dataIndex: 'month'},
+                                {header: "產品", width: 100, sortable: true, dataIndex: 'product'},
+                                {header: "原料種類", width: 140, sortable: true, dataIndex: 'resource'},
+                                {header: "契約供應商", width: 100, sortable: true, dataIndex: 'supplier'},
+                                {header: "契約單價", width: 100, sortable: true, dataIndex: 'price'},
+                                {header: "契約供貨量(月)", width: 118, sortable: true, dataIndex: 'num'}
+                            ],
+                            stripeRows: true,
+                            height:400,
+                            width:700,
+                            frame:true,
+                            title:'決策--研究開發',
+
+                            plugins: new Ext.ux.PanelResizer({
+                                minHeight: 100
+                            }),
+
+                            bbar: new Ext.PagingToolbar({
+                                pageSize: 10,
+                                store: store,
+                                displayInfo: true,
+                                plugins: new Ext.ux.ProgressBarPager()
+                            })
+                        });
+
+                        grid.render('research');
+
+                        store.load({params:{start:0, limit:10}});
+                    }
+                });
+            };
+            function show_pm(){
+                $.ajax({
+                    url: 'd_value_operation.php',
+                    type:'GET',
+                    data: 'option=buy_material',
+                    error: function(xhr) {alert('Ajax request error');}, 
+                    success: function(str){
+                        var myData = eval('(' + str + ')');
+                        var store = new Ext.data.Store({
+                            proxy: new Ext.ux.data.PagingMemoryProxy(myData),
+                            remoteSort:true,
+                            reader: new Ext.data.ArrayReader({
+                                fields: [
+                                    {name: 'year'},
+                                    {name: 'month'},
+                                    {name: 'material_type'},
+                                    {name: 'supplier_type'},
+                                    {name: 'number'}
+                                ]
+                            })
+                        });
+                        // create the Grid
+                        var grid = new Ext.grid.GridPanel({
+                            store: store,
+                            columns: [
+                                {header: "年", width: 50, sortable: true, dataIndex: 'year'},
+                                {header: "月", width: 50, sortable: true, dataIndex: 'month'},
+                                {header: "原料種類", width: 150, sortable: true, dataIndex: 'material_type'},
+                                {header: "供應商", width: 100, sortable: true, dataIndex: 'supplier_type'},
+                                {header: "購買數量", width: 100, sortable: true, dataIndex: 'number'}
+                            ],
+                            stripeRows: true,
+                            height:400,
+                            width:670,
+                            frame:true,
+                            title:'決策--購買原料',
+                            plugins: new Ext.ux.PanelResizer({
+                                minHeight: 100
+                            }),
+                            bbar: new Ext.PagingToolbar({
+                                pageSize: 10,
+                                store: store,
+                                displayInfo: true,
+                                plugins: new Ext.ux.ProgressBarPager()
+                            })
+                        });
+                        grid.render('pm');
+                        store.load({params:{start:0, limit:10}});
+                    }
+                });
+            };
+                    
+        </script>
+
+    </head>
+    <body>
+    	<div style="float:right; margin-right:36%; height:auto">
+        <div id="buy"></div>
+        <div id="sell"></div>
+        <div id="money"></div>
+        <div id="research"></div>
+        <div id="pm"></div>
+        </div>
+        <div align="left" style="margin-left:1%">
+        <input type="image" src="../images/decision/asset_buy.png" title="購買資產" class="A"><br>
+        <input type="image" src="../images/decision/asset_sell.png" title="處分資產" class="B"><br>
+        <input type="image" src="../images/decision/money_find.png" title="資金募集" class="C"><br>
+        <input type="image" src="../images/decision/research.png" title="研究/開發" class="D"><br>
+        <input type="image" src="../images/decision/buy_material.png" title="購買/分配原料" class="E"><br>
+        </div>
+    </body>
+</html>

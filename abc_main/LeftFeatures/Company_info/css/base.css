@@ -1,0 +1,29 @@
+@charset "UTF-8";
+/**
+ * JavaScript/Ajax Samples
+ * @module base
+ */
+
+/* base
+ ---------------------------------------- */
+html {
+	background-color: #fff;/*網底顏色*/
+}
+
+body {
+	font-family:  "微軟正黑體", "Microsoft JhengHei", "黑體-繁","Heiti TC", "儷黑 Pro", "LiHei Pro", "新細明體", "PMingLiU", sans-serif;
+	font-size: 100%;
+}
+
+/* header
+ ---------------------------------------- */
+
+
+/* container
+ ---------------------------------------- */
+#container {
+	border: 1px solid #000;
+}
+
+/* footer
+ ---------------------------------------- */

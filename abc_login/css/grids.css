@@ -1,0 +1,35 @@
+@charset "UTF-8";
+/**
+ * JavaScript/Ajax Samples
+ * @module grids
+ */
+
+/* header
+ ---------------------------------------- */
+#header {
+	height: 6em;
+	width: 300px;
+	margin: 0 auto;
+}
+
+#header h1 {
+	padding: 1em 0 0;
+}
+
+/* container
+ ---------------------------------------- */
+#container {
+	width: 300px;
+	margin: 0 auto;
+}
+
+#container a {
+	width: 65px;
+}
+
+/* footer
+ ---------------------------------------- */
+#footer {
+	width: 300px;
+	margin: 0 auto;
+}

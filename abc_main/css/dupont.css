@@ -1,0 +1,46 @@
+html,body{
+margin:0;
+padding:0;
+}
+@media (min-width: 768px){
+    body{
+    font-size: 20px;
+}
+    th{
+    font-size: 18px;
+    }
+}
+
+a {
+  color: #f0c770;
+  text-decoration: none;
+}
+a:hover{
+ color: #998763;
+}
+
+
+@media (max-width: 768px){
+    h1{
+        font-size:20px;
+    }
+    h2{
+        font-size: 14px;
+        padding: 0;
+        margin: 0px;
+    }
+    h3{
+        font-size: 13px;
+        padding: 0;
+        margin: 0px;
+    }
+    .col-xs-12{
+        padding: 10px;;
+    }
+    th{
+        font-size:12px;
+    }
+    td{
+        font-size:10px;
+    }
+}

@@ -1,0 +1,34 @@
+html,body{
+margin:0;
+padding:0;
+}
+
+
+table>tbody>tr>.ctm-padmag{
+   padding-top: 15px ;
+}
+
+
+@media (max-width: 768px){
+    h1{
+        font-size: 18px;
+    }
+    table>tbody>tr>.ctm-padmag{
+     padding-top: 60px ;
+    }  
+    .btn-success{
+     margin: 5px ;
+    }  
+    .ctm-padding{
+        padding:0px;
+        }
+}
+.ctm-contentpad{
+ padding-top: 9px;
+}
+@media (max-width: 768px){
+.ctm-contentpad{
+ padding-top: 0px;
+padding-left: 35px;
+}
+}

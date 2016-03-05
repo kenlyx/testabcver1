@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Line Chart</title>
+        <link rel="stylesheet" type="text/css" href="../ext-4.0.2a/resources/css/ext-all.css" />
+        <link rel="stylesheet" type="text/css" href="../ext-4.0.2a/examples/example.css" />
+        <script type="text/javascript" src="../ext-4.0.2a/bootstrap.js"></script>
+        <script type="text/javascript" src="../js/revenue_sources_B.js"></script>
+        <script type="text/javascript" src="../js/jquery.js"></script>
+        <script type="text/javascript">
+            Ext.require('Ext.chart.*');
+			Ext.require('Ext.panel.*');
+            Ext.require(['Ext.Window', 'Ext.fx.target.Sprite', 'Ext.layout.container.Fit']);
+            Ext.onReady(function () {
+                var year=0;
+				var year_now=0;
+				var filterPanel = Ext.create('Ext.panel.Panel', {
+					title: '',
+					renderTo: 'get',
+					width: 780
+					});
+                var ajax=$.ajax({
+                    url:'revenue_sources_B.php',
+                    type: 'GET',
+                    async:false,
+                    datatype: 'html',
+                    data:'type=year',
+                    success: function(str){
+                        year=parseInt(str);
+						year_now=parseInt(str);
+						filterPanel.setTitle("第"+year+"年 &nbsp;營收分析");
+                    }
+                });
+
+                store1.loadData(generateData());
+                var colors = ['url(#v-1)',
+                    'url(#v-2)',
+                    'url(#v-3)',
+                    'url(#v-4)',
+                    'url(#v-5)'];
+
+                var baseColor = '#eee';
+
+                Ext.define('Ext.chart.theme.Fancy', {
+                    extend: 'Ext.chart.theme.Base',
+
+                    constructor: function(config) {
+                        this.callParent([Ext.apply({
+                                axis: {
+                                    fill: baseColor,
+                                    stroke: baseColor
+                                },
+                                axisLabelLeft: {
+                                    fill: baseColor
+                                },
+                                axisLabelBottom: {
+                                    fill: baseColor
+                                },
+                                axisTitleLeft: {
+                                    fill: baseColor
+                                },
+                                axisTitleBottom: {
+                                    fill: baseColor
+                                },
+                                colors: colors
+                            }, config)]);
+                    }
+                });
+                var win = Ext.create('Ext.chart.Chart', {
+                    width: 780,
+                    height: 600,
+                    renderTo: 'test',
+                    id: 'chartCmp',
+                    xtype: 'chart',
+                    theme: 'Fancy',
+                    animate: {
+                        easing: 'bounceOut',
+                        duration: 670
+                    },
+                    store: store1,
+                    background: {
+                        fill: 'rgb(17, 17, 17)'
+                    },
+                    gradients: [
+                        {
+                            'id': 'v-1',
+                            'angle': 0,
+                            stops: {
+                                0: {
+                                    color: 'rgb(232, 68, 68)'
+                                },
+                                100: {
+                                    color: 'rgb(229, 45, 45)'
+                                }
+                            }
+                        },
+                        {
+                            'id': 'v-2',
+                            'angle': 0,
+                            stops: {
+                                0: {
+                                    color: 'rgb(119,255,119)'
+                                },
+                                100: {
+                                    color: 'rgb(0, 0, 179)'
+                                }
+                            }
+                        },
+                        {
+                            'id': 'v-3',
+                            'angle': 0,
+                            stops: {
+                                0: {
+                                    color: 'rgb(43, 221, 115)'
+                                },
+                                100: {
+                                    color: 'rgb(14, 117, 56)'
+                                }
+                            }
+                        },
+                        {
+                            'id': 'v-4',
+                            'angle': 0,
+                            stops: {
+                                0: {
+                                    color: 'rgb(67,132,229)'
+                                },
+                                100: {
+                                    color: 'rgb(22,89,185)'
+                                }
+                            }
+                        },
+                        {
+                            'id': 'v-5',
+                            'angle': 0,
+                            stops: {
+                                0: {
+                                    color: 'rgb(255,166,77)'
+                                },
+                                100: {
+                                    color: 'rgb(255,128,0)'
+                                }
+                            }
+                        }],
+                    axes: [{
+                            type: 'Numeric',
+                            position: 'left',
+                            fields: ['data1'],
+                            minimum: 0,
+                            maximum: 300000000,
+                            label: {
+                                renderer: Ext.util.Format.numberRenderer('0,0')
+                            },
+                            title: 'Income',
+                            grid: {
+                                odd: {
+                                    stroke: '#555'
+                                },
+                                even: {
+                                    stroke: '#555'
+                                }
+                            }
+                        }, {
+                            type: 'Category',
+                            position: 'bottom',
+                            fields: ['name'],
+                            title: 'Month of the Year'
+                        }],
+                    series: [{
+                            type: 'column',
+                            axis: 'left',
+                            highlight: true,
+                            label: {
+                                display: 'insideEnd',
+                                'text-anchor': 'middle',
+                                field: 'data1',
+                                orientation: 'horizontal',
+                                fill: '#fff',
+                                font: '17px Arial'
+                            },
+                            renderer: function(sprite, storeItem, barAttr, i, store) {
+                                barAttr.fill = colors[i % colors.length];
+                                return barAttr;
+                            },
+                            style: {
+                                opacity: 0.95
+                            },
+                            xField: 'name',
+                            yField: 'data1'
+                        }]
+                });
+                Ext.create('Ext.Button', {
+                    renderTo: 'left',
+                    text: '&nbsp;<b><<<b>&nbsp;<br>',
+                    handler: function() {
+                        year--;
+                        if(year<1){
+                            year=1;
+                        }
+                        store1.loadData(generateData(year));
+						filterPanel.setTitle("第"+year+"年 &nbsp;營收分析");
+                    }
+                });
+                Ext.create('Ext.Button', {
+                    renderTo: 'right',
+                    text: '&nbsp;<b>>><b>&nbsp;<br>',
+                    handler: function() {
+                        year++;
+						if(year>year_now){
+							year=year_now;
+						}						
+                        store1.loadData(generateData(year));
+						filterPanel.setTitle("第"+year+"年 &nbsp;營收分析");
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <table align="center">
+			<tr><th></th><th align="right"><div id="get"></div></th><th></th></tr>
+            <tr>
+				<th><div id="left"></div></th>
+                <th><div id="test"></div></th>
+                <th><div id="right"></div></th>
+            </tr>
+        </table>
+
+    </body>
+</html>

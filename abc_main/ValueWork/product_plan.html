@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="../css/smart_tab.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="../css/jquery.cluetip.css" type="text/css" />
+        <script type="text/javascript" src="../js/jquery.js"></script>
+        <script type="text/javascript" src="../js/jquery.smartTab.js"></script>
+        <script src="../js/jquery.hoverIntent.js" type="text/javascript"></script>
+         <script src="../js/jquery.cluetip.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="../css/style.css"/>
+        <script type="text/javascript">
+            var f_count=0,e_count=0,s_count=0,h_count=0,fire_cost=0,fire=new Array(),machine_A,machine_B, RD_done_A, RD_done_B;
+            $(document).ready(function(){
+				get_RD();
+                get_machine();
+                $('#tabs').smartTab({autoProgress: false,stopOnFocus:true,transitionEffect:'slide'});
+                $("#pA").click(function(){
+                    
+                    if(RD_done_A>=1&&machine_A==1)
+                        $("div#content2").load("./product_A.php");
+                    else
+                        $("div#content2").html("");
+                    if(RD_done_A==0)
+                        $("div#content2").append("<font size=4>請先進行研發</font></br>");
+                    if(machine_A==0)
+                        $("div#content2").append("<font size=4>請購買足夠的機具</font></br>");
+                });
+                $("#pB").click(function(){
+                    //alert(machine_B);
+                    if(RD_done_B>=1&&machine_B==1)
+                        $("div#content2").load("./product_B.php");
+                    else
+                        $("div#content2").html("");
+                    if(RD_done_B==0)
+                        $("div#content2").append("<font size=4>請先進行研發</font></br>");
+                    if(machine_B==0)
+                        $("div#content2").append("<font size=4>請購買足夠的機具</font></br>");
+                });
+                $("#clue_pA").cluetip({
+                    cluetipClass: 'rounded',
+                    dropShadow: false,
+                    positionBy: 'fixed',
+                    width: '150px',
+                    topOffset: -40,
+                    leftOffset: 60,
+                    ajaxSettings:{data:"name=clue_pA"}
+                });
+                $("#clue_pB").cluetip({
+                    cluetipClass: 'rounded',
+                    dropShadow: false,
+                    positionBy: 'fixed',
+                    width: '150px',
+                    topOffset: -40,
+                    leftOffset: 60,
+                    ajaxSettings:{data:"name=clue_pB"}
+                });
+            });
+				function get_machine(){
+                $.ajax({
+                    url: '../ResourceIntegration/machineDB.php',
+                    type:'GET',
+                    data: {
+                        type: "pp"
+                    },
+                    error:
+                        function(xhr) {alert('Ajax request 發生錯誤');},
+                    success:
+                        function(str){
+                            strs=str.split(",");
+                            machine_A=strs[0];
+                            machine_B=strs[1];
+                            if(strs[0]==0)
+                                document.getElementById("pA").style.opacity=0.5;
+                            if(strs[1]==0)
+                                document.getElementById("pB").style.opacity=0.5;
+                        }
+                });
+            };
+            function get_RD(){
+                $.ajax({
+                    url: 'R&D_kernel.php',
+                    type:'GET',
+                    data: {
+                        result: "detail"
+                    },
+                    error:
+                        function(xhr) {alert('Ajax request 發生錯誤');},
+                    success:
+                        function(str){
+							document.getElementById("pA").style.opacity=1;
+							document.getElementById("pB").style.opacity=1;
+                            strs=str.split(",");
+                            RD_done_A=strs[0];
+                            RD_done_B=strs[1];
+                            if(strs[0]==0)
+                                document.getElementById("pA").style.opacity=0.5;
+                            if(strs[1]==0)
+                                document.getElementById("pB").style.opacity=0.5;
+                        }
+                });
+            };
+            /*function journal(){
+                TINY.box.show({iframe:'journal.html',boxid:'frameless',width:800,height:500,style:"z-index:2; top:30px",fixed:false,maskid:'bluemask',maskopacity:40,closejs:function(){closeJS()}});
+                get_machine();
+            }*/
+        </script>
+    </head>
+    <body>
+         <div id="content">
+            <a class="back" href=""></a>
+            <p class="head">
+                Activity Based Costing Simulation System
+            </p>
+            <h1>生產規劃&nbsp;
+            	<font size="2" color="#ff3030" style="font-family:'Comic Sans MS', cursive;text-shadow:none;">
+            	* 請詳讀手冊關於生產的細節 *</font></h1>
+        
+       <div id="tabs" class="stContainer">
+            <ul>
+                <li>
+                    <a href="#tabs-1">
+                        <img class='logoImage2' border="0" width="22%" src="../images/Step1.png">
+                        <font size="4">生產規劃</font>
+   
+                    </a>
+                </li>
+                <li>
+                    <a href="#tabs-2">
+                        <img class='logoImage2' border="0" width="22%" src="../images/Step2.png">
+                        <font size="4">生產</font>
+                    </a>
+                </li>
+            </ul>
+            <div id="tabs-1">
+                <iframe id="content_in" width="100%" height="74%" marginwidth="0" marginheight="0" frameborder="0" src="./ABC_product_plan.php"></iframe>
+            </div>
+            <div id="tabs-2">
+                <table border="0" width="98%" height="100%">
+                    <tr><th style="width:15%;height:100%;" rowspan=2>
+                            <a id="clue_pA" rel="cluetip.php"><input type="image" id="pA" src="../images/product_A.png" width="40%"></a><br/>
+							<br><br>
+                            <a id="clue_pB" rel="cluetip.php"><input type="image" id="pB" src="../images/product_B.png" width="40%"></a><br/>
+                        </th>
+                        <th style="width:85%;height:100%;" colspan=4>
+                        	<br>
+                            <div id="content2" style="width:95%;height:92%; background-color:#E3E4FA;"><font face="標楷體" size="4">請選擇產品</font></div>
+                        </th></tr>
+                </table>
+            </div>
+        </div>
+      </div> 
+    </body>
+</html>

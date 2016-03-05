@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!--
+        圖檔不知在哪也看不到效果
+        <link rel="stylesheet" type="text/css" href="progress-bar-pager/PanelResizer.css">
+        看不出效果...
+        <link rel="stylesheet" type="text/css" href="progress-bar-pager/grid-examples.css">
+        可不用，底色會變白
+        <link rel="stylesheet" type="text/css" href="progress-bar-pager/examples.css">
+        有jquery.js才能在d_value_relationship.js裡用$.ajax，不然就用Ext.Ajax(?)-->
+        <link rel="stylesheet" type="text/css" href="../js/progress-bar-pager/ext-all.css">
+        <link rel="stylesheet" type="text/css" href="../js/progress-bar-pager/ext-patch.css">
+        <script type="text/javascript" src="../js/jquery.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/ext-base.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/ext-all.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/ProgressBarPager.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/PanelResizer.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/PagingMemoryProxy.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var showed_donate=0,showed_share=0,showed_relationship=0;
+                $(".A").click(function(){
+                    if(showed_donate==0){
+                        if(showed_share==1){
+                            display("share","none");
+                        }
+                        if(showed_relationship==1){
+                            display("relationship","none");
+                        }
+                        show_donate();
+                        showed_donate=1;
+                    }
+                    else{
+                        if(showed_share==1){
+                            display("share","none");
+                        }
+                        if(showed_relationship==1){
+                            display("relationship","none");
+                        }
+                        display("donate","block");
+                    }
+                });
+                $(".B").click(function(){
+                    if(showed_share==0){
+                        if(showed_donate==1){
+                            display("donate","none");
+                        }
+                        if(showed_relationship==1){
+                            display("relationship","none");
+                        }
+                        show_share();
+                        showed_share=1;
+                    }
+                    else{
+                        if(showed_donate==1){
+                            display("donate","none");
+                        }
+                        if(showed_relationship==1){
+                            display("relationship","none");
+                        }
+                        display("share","block");
+                    }
+                });
+                $(".C").click(function(){
+                    if(showed_relationship==0){
+                        if(showed_donate==1){
+                            display("relationship","none");
+                        }
+                        if(showed_share==1){
+                            display("relationshipe","none");
+                        }
+                        show_relationship();
+                        showed_relationship=1;
+                    }
+                    else{
+                        if(showed_donate==1){
+                            display("relationship","none");
+                        }
+                        if(showed_share==1){
+                            display("relationship","none");
+                        }
+                        display("relationship","block");
+                    }
+                });
+                function display(id,method){
+                    var id=document.getElementById(id);
+                    id.style.display=method;
+                }
+            });
+            function show_donate(){
+                var myData;
+                $.ajax({
+                    url: 'd_value_relationship.php',
+                    type:'GET',
+                    data: 'option=donate',
+                    error: function(xhr) {
+                        alert('Ajax request error');
+                    }, 
+                    success: function(str){
+                        myData = eval('(' + str + ')');
+
+                        function money(val){
+                            return '$' + val;
+                        }
+
+                        // example of custom renderer function參考用
+                        function pctChange(val){
+                            if(val > 0){
+                                return '<span style="color:green;">' + val + '%</span>';
+                            }else if(val < 0){
+                                return '<span style="color:red;">' + val + '%</span>';
+                            }
+                            return val;
+                        }
+
+                        // create the data store
+                        var store = new Ext.data.Store({
+                            proxy: new Ext.ux.data.PagingMemoryProxy(myData),
+                            remoteSort:true,
+                            //sortInfo: {field:'month', direction:'ASC'},
+                            reader: new Ext.data.ArrayReader({
+                                fields: [
+                                    {name: 'year'},
+                                    {name: 'month'},
+                                    {name: 'd1'},
+                                    {name: 'd2'},
+                                    {name: 'd3'}
+                                ]
+                            })
+                        });
+
+                        // create the Grid
+                        var grid = new Ext.grid.GridPanel({
+                            store: store,
+                            columns: [
+                                {
+                                    id:'year',
+                                    header: "年", 
+                                    width: 50, 
+                                    sortable: true, 
+                                    dataIndex: 'year'
+                                },
+
+                                {
+                                    header: "月", 
+                                    width: 50, 
+                                    sortable: true, 
+                                    dataIndex: 'month'
+                                },
+
+                                {
+                                    header: "半導體晶圓", 
+                                    width: 100, 
+                                    sortable: true, 
+                                    renderer: money, 
+                                    dataIndex: 'd1'
+                                },
+
+                                {
+                                    header: "多核心處理器", 
+                                    width: 100, 
+                                    sortable: true, 
+                                    renderer: money, 
+                                    dataIndex: 'd2'
+                                },
+
+                                {
+                                    header: "顯示器", 
+                                    width: 150, 
+                                    sortable: true, 
+                                    renderer: money, 
+                                    dataIndex: 'd3'
+                                }
+                            ],
+                            stripeRows: true,
+                            height:400,
+                            width:670,
+                            frame:true,
+                            title:'筆電差異化',
+
+                            plugins: new Ext.ux.PanelResizer({
+                                minHeight: 100
+                            }),
+
+                            bbar: new Ext.PagingToolbar({
+                                pageSize: 10,
+                                store: store,
+                                displayInfo: true,
+                                plugins: new Ext.ux.ProgressBarPager()
+                            })
+                        });
+
+                        grid.render('donate');
+
+                        store.load({
+                            params:{
+                                start:0, 
+                                limit:10
+                            }
+                        });
+                    }
+                });
+            };
+            function show_share(){
+                var myData;
+                $.ajax({
+                    url: 'd_value_relationship.php',
+                    type:'GET',
+                    data: 'option=share',
+                    error: function(xhr) {
+                        alert('Ajax request error');
+                    }, 
+                    success: function(str){
+                        myData = eval('(' + str + ')');
+
+                        function money(val){
+                            return '$' + val;
+                        }
+
+                        // example of custom renderer function參考用
+                        function pctChange(val){
+                            if(val > 0){
+                                return '<span style="color:green;">' + val + '%</span>';
+                            }else if(val < 0){
+                                return '<span style="color:red;">' + val + '%</span>';
+                            }
+                            return val;
+                        }
+
+                        // create the data store
+                        var store = new Ext.data.Store({
+                            proxy: new Ext.ux.data.PagingMemoryProxy(myData),
+                            remoteSort:true,
+                            //sortInfo: {field:'month', direction:'ASC'},
+                            reader: new Ext.data.ArrayReader({
+                                fields: [
+                                    {name: 'year'},
+                                    {name: 'month'},
+                                    {name: 'd1'},
+                                    {name: 'd2'},
+                                    {name: 'd3'}
+                                ]
+                            })
+                        });
+
+                        // create the Grid
+                        var grid = new Ext.grid.GridPanel({
+                            store: store,
+                            columns: [
+                                {header: "年", width: 50,  sortable: true, dataIndex: 'year'},
+                                {header: "月", width: 50, sortable: true, dataIndex: 'month'},
+                                {header: "觸控螢幕", width: 110,sortable: true,renderer: money,dataIndex: 'd1'},
+                                {header: "記憶體",width: 170, sortable: true,renderer: money,dataIndex: 'd2'},
+                                {header: "多核心處理器",width: 120,sortable: true,renderer: money,dataIndex: 'd3'}  
+                            ],
+                            stripeRows: true,
+                            height:400,
+                            width:670,
+                            frame:true,
+                            title:'平板差異化',
+
+                            plugins: new Ext.ux.PanelResizer({
+                                minHeight: 100
+                            }),
+
+                            bbar: new Ext.PagingToolbar({
+                                pageSize: 10,
+                                store: store,
+                                displayInfo: true,
+                                plugins: new Ext.ux.ProgressBarPager()
+                            })
+                        });
+
+                        grid.render('share');
+
+                        store.load({
+                            params:{
+                                start:0, 
+                                limit:10
+                            }
+                        });
+                    }
+                });
+            };
+            function show_relationship(){
+                var myData;
+                $.ajax({
+                    url: 'd_value_relationship.php',
+                    type:'GET',
+                    data: 'option=relationship',
+                    error: function(xhr) {
+                        alert('Ajax request error');
+                    }, 
+                    success: function(str){
+                        myData = eval('(' + str + ')');
+
+                        function money(val){
+                            return '$' + val;
+                        }
+
+                        // example of custom renderer function參考用
+                        function pctChange(val){
+                            if(val > 0){
+                                return '<span style="color:green;">' + val + '%</span>';
+                            }else if(val < 0){
+                                return '<span style="color:red;">' + val + '%</span>';
+                            }
+                            return val;
+                        }
+
+                        // create the data store
+                        var store = new Ext.data.Store({
+                            proxy: new Ext.ux.data.PagingMemoryProxy(myData),
+                            remoteSort:true,
+                            //sortInfo: {field:'month', direction:'ASC'},
+                            reader: new Ext.data.ArrayReader({
+                                fields: [
+                                    {name: 'year'},
+                                    {name: 'month'},
+                                    {name: 'type'},
+                                    {name: 'describe'}
+                                ]
+                            })
+                        });
+
+                        // create the Grid
+                        var grid = new Ext.grid.GridPanel({
+                            store: store,
+                            columns: [
+                                {header: "年", width: 50,  sortable: true, dataIndex: 'year'},
+                                {header: "月", width: 50, sortable: true, dataIndex: 'month'},
+                                {header: "類型", width: 110,sortable: true,dataIndex: 'type'},
+                                {header: "描述",width: 300, sortable: true,dataIndex: 'describe'}
+                            ],
+                            stripeRows: true,
+                            height:400,
+                            width:670,
+                            frame:true,
+                            title:'關係管理',
+
+                            plugins: new Ext.ux.PanelResizer({
+                                minHeight: 100
+                            }),
+
+                            bbar: new Ext.PagingToolbar({
+                                pageSize: 10,
+                                store: store,
+                                displayInfo: true,
+                                plugins: new Ext.ux.ProgressBarPager()
+                            })
+                        });
+
+                        grid.render('relationship');
+
+                        store.load({
+                            params:{
+                                start:0, 
+                                limit:10
+                            }
+                        });
+                    }
+                });
+            };
+            
+            
+        </script>
+    </head>
+    <body>
+    	<div style="float:right; margin-right:36%;height:auto">
+         	<div id="donate"></div>
+        	<div id="share"></div>
+        	<div id="relationship"></div>
+        </div>
+        <div align="left" style="margin-left:1%">
+
+       	 	<input type="image" src="../images/decision/relationship.png" title="關係管理" class="C"><br>
+        </div>
+    </body>
+</html>

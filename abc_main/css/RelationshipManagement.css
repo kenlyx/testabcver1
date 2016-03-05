@@ -1,0 +1,113 @@
+html,body{
+margin:0;
+padding:0;
+font-size: 20px;
+}
+p {
+  margin: 0 0 3px;
+}
+.ctm-btnmarg{
+margin-top: 0px;
+}
+.ctmpanelmargin{
+margin-top: 15px;
+margin-bottom: 5px;
+}
+@media (max-width: 1163px){
+    h3{
+      font-size: 15px;
+    }
+}
+@media (max-width: 768px){
+    h1{
+        font-size:20px;
+    }
+    h2{
+        font-size: 14px;
+        padding: 0;
+        margin: 0px;
+    }
+    h3{
+        font-size: 13px;
+        padding: 5px 0px;
+        margin: 0px;
+    }
+    .ctm-h3{
+        padding: 13px 0px;
+    }
+    body{
+    font-size: 12px;
+    
+    }
+    .nav>li>a{
+      padding: 10px 5px;
+    }
+    .ctm-padding{
+    padding:0px;
+    }
+}
+/*在大螢幕顯示樣子*/
+@media (min-width: 768px){
+    .ctm-divtable-top{
+        border-color: #cccccc;
+        border-style: solid;
+        border-width: 1px 1px 0px 1px;
+        border-radius: 5px 5px 0px 0px;
+        background-color: #d9edf7;
+        color: #31708f;
+    }
+    .ctm-divtable-mid{
+        border-color: #cccccc;
+        border-style: solid;
+        border-width: 1px 1px 0px 1px;
+        border-radius: 0px;
+        
+    }
+    .ctm-divtable-mid2{
+        border-color: #cccccc;
+        border-style: solid;
+        border-width: 1px 1px 0px 1px;
+        border-radius: 0px;
+        background-color: #f9f9f9;
+    }
+    .ctm-divtable-btm{
+        border-color: #cccccc;
+        border-style: solid;
+        border-width: 1px 1px 1px 1px;
+        border-radius: 0px 0px 5px 5px;
+        background-color: #f9f9f9;
+    }
+}
+
+/*在小螢幕窗格樣式*/
+@media (max-width: 768px){
+    .ctm-divpanel{
+        border: 1px solid #cccccc;
+        border-radius: 5px;
+        margin-top: 5px;
+    }
+    .ctm-divpanel-head{
+        background-color: #bce8f1;
+        color: #31708f;
+    }
+    .ctm-divpanel-mid{
+        border-bottom: 1px solid #bce8f1;
+        background-color: #f9f9f9;
+    }
+    .ctm-divpanel-mid2{
+        border-bottom: 1px solid #bce8f1;
+        border-right: 1px solid #bce8f1;
+        border-left: 1px solid #bce8f1;
+        background-color: #f9f9f9;
+    }
+    .ctm-divpanel-btm{
+        border-bottom: 1px solid #bce8f1;
+        background-color: #fcfcfc;
+    }
+    
+    
+    .font-color{
+       color: #31708f;
+        font-weight:bold;
+    }
+}

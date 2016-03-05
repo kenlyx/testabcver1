@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Line Chart</title>
+		<link rel="stylesheet" type="text/css" href="./ext-4.1.1a-gpl/ext-4.1.1a/resources/css/ext-all.css" />
+        <script type="text/javascript" src="./ext-4.1.1a-gpl/ext-4.1.1a/bootstrap.js"></script>
+		<script type="text/javascript" src="./js/ext-lang-zh_TW"></script>
+        
+		<script type="text/javascript" src="./js/ext-lang-zh_TW"></script>
+        <script type="text/javascript" src="./js/stockprice_lineChart.js"></script>
+        <script type="text/javascript" src="../../js/jquery.js"></script>
+        <script type="text/javascript">
+            Ext.require('Ext.chart.*');
+			Ext.require('Ext.panel.*');
+            Ext.require(['Ext.Window', 'Ext.fx.target.Sprite', 'Ext.layout.container.Fit']);
+			 
+    
+            Ext.onReady(function () {
+                var years=0,year_now=0;
+				var filterPanel = Ext.create('Ext.panel.Panel', {
+					title: '',
+					renderTo: 'get',
+					width: 802
+					});
+                var ajax=$.ajax({
+                    url:'./stockprice_lineChart.php',
+                    type: 'GET',
+                    async:false,
+                    datatype: 'html',
+                    data:'type=year',                
+                    success: function(str){
+						set=str.split(":");
+                        years=parseInt(set[0]);
+						month=parseInt(set[1]);
+                        year_now=years;
+						if(month<2){
+							if((years>1)&&years==year_now){
+								years=year_now-1;
+							}
+						}
+						filterPanel.setTitle("現在是第"+years+"年");
+                    }
+                });
+                store1.loadData(generateData());
+                var win = Ext.create('Ext.chart.Chart', {
+                    width: 800,
+                    height: 450,
+                    renderTo: 'test',
+                    xtype: 'chart',
+                    style: 'background:#fff',
+                    animate: true,
+                    store: store1,
+                    shadow: true,
+                    theme: 'Category1',
+                    legend: {
+                        position: 'top'
+                    },
+                    axes: [{
+                            type: 'Numeric',
+                            minimum: 0,
+                            position: 'left',
+                            fields: ['data1'],
+                                
+                            title: 'Price',
+                            minorTickSteps: 1,
+                            grid: {
+                                odd: {
+                                    opacity: 1,
+                                    fill: '#ddd',
+                                    stroke: '#bbb',
+                                    'stroke-width': 0.5
+                                }
+                            }
+                        }, {
+                            type: 'Category',
+                            position: 'bottom',
+                            fields: ['name'],
+                            title: ''
+                        }],
+                            
+                    series: [{
+                            type: 'line',
+                            title: '股價',
+                            highlight: {
+                                size: 7,
+                                radius: 7
+                            },
+                            axis: 'left',
+                            xField: 'name',
+                            yField: 'data1',
+                            markerConfig: {
+                                type: 'cross',
+                                size: 4,
+                                radius: 4,
+                                'stroke-width': 0
+                            }
+                        }]
+                });
+                Ext.create('Ext.Button', {
+                    renderTo: 'left',
+                    text: '-',
+                    handler: function() {
+                        years--;
+                        if(years<1){
+                            years=1;
+                        }
+                        store1.loadData(generateData(years));
+						filterPanel.setTitle("現在是第"+years+"年");
+                    }
+                });
+                Ext.create('Ext.Button', {
+                    renderTo: 'right',
+                    text: '+',
+                    handler: function() {
+                        years++;
+                        if(years>year_now){
+                            years=year_now;
+                        }
+						if(month<2){
+							if((years>1)&&years==year_now){
+								years=year_now-1;
+								alert("股價現在只有第"+years+"年之前的資料");
+							}
+						}
+                        store1.loadData(generateData(years));
+						filterPanel.setTitle("現在是第"+years+"年");
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+    <table align="center">
+			<tr><th></th><th align="right"><div id="get"></div></th><th></th></tr>
+            <tr>
+				<th><div id="left"></div></th>
+                <th style="border: 1px double rgb(109, 2, 107);"><div id="test"></div></th>
+                <th><div id="right"></div></th>
+            </tr>
+            
+                
+        </table>
+    </body>
+</html>

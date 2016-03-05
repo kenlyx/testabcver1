@@ -1,0 +1,71 @@
+@charset "UTF-8";
+/**
+ * JavaScript/Ajax Samples
+ * @module style
+ */
+
+/* header
+ ---------------------------------------- */
+#header h1 {
+	margin-top:4px;
+	font-size: 175%;
+	font-weight: bolder;
+	color:#fff;
+}
+
+/* container
+ ---------------------------------------- */
+#container {
+	border:1px;
+	background: #7f7f7f url('../images/') no-repeat;
+}
+
+#navi {
+	border: 1px solid #ccc;
+}
+
+#navi li {
+	border-bottom: 1px solid #ccc;
+	color: #000;
+	line-height: 2.5em;
+	text-indent: 1em;
+	text-decoration: none;
+}
+
+#ticker {
+	border: 1px solid #ccc;
+}
+
+#ticker li {
+	color: #000;
+}
+
+#ticker h2 {
+	font-size: 120%;
+	font-weight: bolder;
+	border-bottom: 1px solid #ccc;
+}
+
+#ticker dl {
+	line-height: 2.5em;
+}
+
+#ticker p {
+	line-height: 1.5em;
+}
+
+/* footer
+ ---------------------------------------- */
+#footer {
+	font-size: 80%;
+}
+
+/* class
+ ---------------------------------------- */
+.onCounter {
+	background-color: #9CF;
+}
+
+.offCounter {
+	background-color: #fff;
+}

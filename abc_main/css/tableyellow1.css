@@ -1,0 +1,70 @@
+.yellowTable{
+	width: 100%;
+	border-collapse:collapse;
+	border:1px solid #FFCA5E;
+}
+.yellowTable caption{
+	font: 1.6em/1.6em Arial, Helvetica, sans-serif;
+	text-align: center;
+	text-indent: 10px;
+	background: url(../images/bg_caption.jpg) right top;
+	height: 38px;
+	color: #FFAA00;
+}
+.yellowTable thead tr{
+	height: 38px;
+	color:#FFF;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0px 7px;
+	margin: 20px 0px 0px;
+	text-align: left;
+	border-right: 1px solid #FCF1D4;
+}
+.yellowTable thead th {
+	background: url(../images/bg_th.jpg) no-repeat right;
+	height: 40px;
+	color:#FFF;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 0px 7px;
+	margin: 20px 0px 0px;
+	text-align: center;
+	border-right: 1px solid #FCF1D4;
+}
+.yellowTable tbody tr {
+background: url(../images/bg_td1.jpg) repeat-x top;
+}
+.yellowTable tbody tr.odd {
+	background: #FFF8E8 url(../images/bg_td2.jpg) repeat-x;
+}
+
+.yellowTable tbody th,td {
+	font-size: 0.8em;
+	line-height: 1.1em;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #777777;
+	padding: 8px 6px;
+	border-top: 1px solid #FFCA5E;
+	border-right: 1px solid #DDDDDD;
+	text-align: center;
+}
+.yellowTable a {
+	color: #777777;
+	font-weight: bold;
+	text-decoration: underline;
+}
+.yellowTable a:hover {
+	color: #F8A704;
+	text-decoration: underline;
+}
+.yellowTable tfoot th {
+	background: url(../images/bg_total.jpg) repeat-x bottom;
+	color: #FFFFFF;
+	height: 26px;
+}
+.yellowTable tfoot td {
+	background: url(../images/bg_total.jpg) repeat-x bottom;
+	color: #FFFFFF;
+	height: 26px;
+}

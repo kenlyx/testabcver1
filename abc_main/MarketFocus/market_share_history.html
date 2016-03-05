@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="../css/smart_tab.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="../js/jquery.js"></script>
+        <script type="text/javascript" src="../js/jquery.smartTab.js"></script>
+        <link rel="stylesheet" href="../css/style.css"/>
+        <link rel="stylesheet" href="../css/tableyellow1.css"/>
+        <script type="text/javascript">
+           	var type="A";
+			//var type="B";
+            var month=1;
+            $(document).ready(function(){
+                $('#tabs').smartTab({autoProgress: false,stopOnFocus:true,transitionEffect:'slide'});
+                $("#pA").click(function(){
+                   type="A";
+				   month=1;
+                   $("#s_div").load("./market_share_history.php",{'type':""+type, 'month':""+month});
+                });
+                $("#pB").click(function(){
+                    type="B";
+					month=1;
+                    $("#s_div").load("./market_share_history.php",{'type':""+type, 'month':""+month});
+                 });
+				$("#s_div").load("./market_share_history.php",{'type':"A", 'month':""+month});
+                $("#right").click(function(){
+                    month+=3;
+                    $("#s_div").load("./market_share_history.php",{'type':""+type, 'month':""+month});
+                });
+                $("#left").click(function(){
+                    if(month-1 > 0)
+                        month-=3;
+                    else
+                        alert("前面沒東西了啦~!!");
+                    $("#s_div").load("./market_share_history.php",{'type':""+type, 'month':""+month});
+				
+                });
+
+				/*$("#s_div2").load("./market_share_history.php",{'type':"B", 'month':""+month});
+                
+				$("#right2").click(function(){
+                    month+=3;
+                    $("#s_div2").load("./market_share_history.php",{'type':"B", 'month':""+month});
+                });
+                
+				$("#left2").click(function(){
+                    if(month-1 > 0)
+                        month-=3;
+                    else
+                        alert("前面沒東西了啦~!!");
+                    $("#s_div2").load("./market_share_history.php",{'type':"B", 'month':""+month});
+                });*/
+            });
+						
+        </script>
+    </head>
+       <body>
+       <table border="0" width="88%" align="center">
+            <tr><th colspan="3" height="0" align="center">
+                    <input id="pA" type="image" src="../images/product_A.png" title="筆記型電腦" width="70" >
+                    <input id="pB" type="image" src="../images/product_B.png" title="平板電腦" width="70">
+            </tr>
+            <tr><th height="100"><input type="image" id="left" src="../images/left.png"></th>
+                <th height="100"><div id="s_div"></div></th>
+                <th height="100"><input type="image" id="right" src="../images/right.png"></th></tr>
+   </table>     
+    </body>
+</html>

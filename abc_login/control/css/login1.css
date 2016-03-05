@@ -1,0 +1,24 @@
+
+body{
+	text-align:center;
+	background-image:url(../images/background2.jpg);
+	margin-top:50px;
+	font-weight: bold;	
+	background-repeat: no-repeat;
+}
+#title1{
+	font-size:72px;	
+	color:#FFF;
+}
+#loginForm{
+	margin-top:0px;
+}
+
+#DivLog{
+	text-align:center;
+	margin-top:180px;
+	font-size:16px;
+
+
+}
+	

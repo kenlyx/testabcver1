@@ -1,0 +1,83 @@
+.content{
+    font-family:"Courier New", Courier, monospace;
+	background-color:#000;
+	width:100%;
+	height:1000px;
+	padding:0px 3px 3px -3px;
+	}
+
+#topmenu,#topmenu ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+#topmenu {
+	font-size:15px;
+    background-color: #999999;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    display: table;
+    padding: 10px;
+    position: relative;
+}
+#topmenu ul {
+    border-radius: 0 5px 5px 5px;
+    border-width: 0 1px 1px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+    left: -9999px;
+    overflow: hidden;
+    padding: 20px 0 10px;
+    position: absolute;
+    top: -9999px;
+
+    -moz-transform: scaleY(0);
+    -ms-transform: scaleY(0);
+    -o-transform: scaleY(0);
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0);
+
+    -moz-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+
+    -moz-transition: -moz-transform 0.1s linear;
+    -ms-transition: -ms-transform 0.1s linear;
+    -o-transition: -o-transform 0.1s linear;
+    -webkit-transition: -webkit-transform 0.1s linear;
+    transition: transform 0.1s linear;
+}
+#topmenu li {
+    float: left;
+    position: relative;
+}
+#topmenu li a {
+    color: #fff;
+    display: block;
+    font-size: 16px;
+    padding: 7px 20px;
+    text-decoration: none;
+}
+#topmenu li:hover > a {
+    background-color: #ff3425;
+    border-radius: 5px 5px 5px 5px;
+    color: #fff;
+}
+#topmenu li:hover > a.m1subs {
+    border-radius: 5px 5px 0 0;
+}
+#topmenu li:hover ul.subs {
+    left: 0;
+    top: 34px;
+    width: 180px;
+    /*顯示下拉式選單*/
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -o-transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+}
+#topmenu ul li {
+    width: 100%;
+}
+

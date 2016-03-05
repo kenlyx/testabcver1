@@ -1,0 +1,75 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="./js/jquery.js"></script>
+        <!--script type="text/javascript">
+            $(document).ready(function(){
+                var RD_done=0;
+                $.ajax({
+                    url: 'R&D_kernel.php',
+                    type:'GET',
+                    data: {
+                        result: "detail"
+                    },
+                    error:
+                        function(xhr) {alert('Ajax request 發生錯誤');},
+                    success:
+                        function(str){
+							//alert(str);
+                            strs=str.split(",");
+                            if(strs[0]+strs[1]==0){
+							
+					
+                                document.getElementById("order_1").style.opacity=0.5;
+                                document.getElementById("order_2").style.opacity=0.5;
+                                RD_done=0;
+                            }
+                            else{
+                                document.getElementById("order_1").style.opacity=1;
+                                document.getElementById("order_2").style.opacity=1;
+                                RD_done=1;
+                            }
+                        }
+                });
+				//alert("testtesttest");
+                $("#order_1").click(function(){
+                    if(RD_done==1){
+                        $("#content").load("order_B2B.html");
+						alert("大量訂單的的訂單訂貨量較多，須注意價格上的優勢~!!");
+					}
+                    else if(RD_done==0)
+                        alert("請先於研發介面研發產品！");
+                });
+                $("#order_2").click(function(){
+                    if(RD_done==1){
+                        $("#content").load("order_B2C.html");
+						alert("小量訂單的訂單訂貨量較少，須注意品質及服務上的提供~!!");
+					}
+                    else if(RD_done==0)
+                        alert("請先於研發介面研發產品！");
+                });
+            });
+        </script-->
+    </head>
+    <body>
+        <!--table border="0">
+            <tr><th>
+                <input type="image" src="../images/B2B.png" title="大量訂單" id="order_1">
+                <input type="image" src="../images/B2C.png" title="小量訂單" id="order_2">
+            </th></tr>
+            <tr>
+                <td width="900">
+                    <div id="content" style="width:900px;height:500px;background-image: url(../images/order_bg.jpg);background-size:cover;">
+                            <center><b><font size="4">請選擇訂單種類</font></b></center>
+                    </div>
+                </td>
+            </tr>
+        </table-->
+    </body>
+</html>

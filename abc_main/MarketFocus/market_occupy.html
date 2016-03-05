@@ -1,0 +1,51 @@
+﻿<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="../css/smart_tab.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="../js/jquery.js"></script>
+        <script type="text/javascript" src="../js/jquery.smartTab.js"></script>
+        <link rel="stylesheet" href="../css/style.css"/>
+        <script type="text/javascript">
+            var type="A";
+			var type="B";
+            var month=1;
+            $(document).ready(function(){
+                $('#tabs').smartTab({autoProgress: false,stopOnFocus:true,transitionEffect:'slide'});
+                
+            });
+		</script>
+    </head>
+       <body>
+    
+        <div id="content">
+            <a class="back" href=""></a>
+            <p class="head">
+                ShelviDream Activity Based Costing Simulated System
+            </p>
+            <h1>市場占有率</h1>
+            
+        <div id="tabs" class="stContainer" style="width:100%;height:98%">
+            <ul style="width: 100%">
+                <li>
+                    <a href="#tabs-1">
+                        <font size="4">當月市占率</font>
+                    </a>
+                </li>
+                <li>
+                    <a href="#tabs-2">
+                        <font size="4">歷史趨勢</font>
+                    </a>
+                </li>
+            </ul>
+
+        <div id="tabs-1" style="width:100%;height:100%">
+       	 	  <iframe width='2000' height='700' marginwidth='0' marginheight='0' align='center' frameborder='0' src='market_share.html'></iframe>
+        </div> 
+              <div id="tabs-2" style="width:95%;height:100%">
+              <iframe  width='1200' height='700' marginwidth='0' marginheight='0' align='center' frameborder='0' src='market_share_history.html'></iframe>
+            </div>
+			 
+        </div><!--end of tabs -->
+        </div><!-- end content -->
+    </body>
+</html>

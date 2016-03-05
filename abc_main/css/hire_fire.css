@@ -1,0 +1,36 @@
+html,body{
+margin:0;
+padding:0;
+}
+@media (min-width: 768px){
+    body{
+    font-size: 18px;
+}
+}
+
+
+@media (max-width: 768px){
+    h1{
+        font-size:20px;
+    }
+    h2{
+        font-size: 14px;
+        padding: 0;
+        margin: 0px;
+    }
+    h3{
+        font-size: 13px;
+        padding: 0;
+        margin: 0px;
+    }
+    .col-sm-9{
+    padding: 0;
+    }
+    .col-sm-3{
+    padding: 0;
+    }
+}
+.panel-padding{
+margin-top: 10px;
+    padding: 0;
+}

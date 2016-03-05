@@ -1,0 +1,63 @@
+@charset "UTF-8";
+/**
+ * JavaScript/Ajax Samples
+ * @module grids
+ */
+
+/*header
+ ---------------------------------------- */
+#header {
+	height: 30px;
+	width: 762px;
+	margin: 0 auto;
+}
+
+#header h1 {
+	
+}
+
+/* container
+ ---------------------------------------- */
+#container {
+	border:0px;
+	height: 600px;
+	width: 1030px;
+	margin: 0 auto;
+	padding: 10px;
+}
+
+#navi {
+	height: 100%;
+	width: 120px;
+	float: left;
+}
+
+#navi li {
+	display: block;
+}
+
+#ticker {
+	height: 100%;
+	float: left;
+}
+
+#ticker li {
+	width: 870px;
+	padding: 10px;
+}
+
+#ticker h2 {
+	margin: 5px 0;
+	padding: 0 5px;
+}
+
+#ticker dt {
+	width: 7em;
+	clear: left;
+	float: left;
+}
+
+#ticker dd {
+	margin-left: 7em;
+}
+

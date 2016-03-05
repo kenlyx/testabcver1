@@ -1,0 +1,347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/all-examples.css">
+<title>ABC Decision</title>
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type=text/javascript>
+$(function(){
+	$('#webmenu li').hover(function(){
+		$(this).children('ul').stop(true,true).show('slow');
+	},function(){
+		$(this).children('ul').stop(true,true).hide('slow');
+	});
+	
+	$('#webmenu li').hover(function(){
+		$(this).children('div').stop(true,true).show('slow');
+	},function(){
+		$(this).children('div').stop(true,true).hide('slow');
+	});
+});
+</script>
+
+<noscript>
+		<style type="text/css">
+			#dock { top: 0; left: 100px; }
+			a.dock-item { position: relative; float: left; margin-right: 10px; }
+			.dock-item span { display: block; }
+			.stack { top: 0; }
+			.stack ul li { position: relative; }
+		</style>
+</noscript>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/fisheye-iutil.min.js"></script>
+	<script type="text/javascript" src="js/dock-example1.js"></script>
+	<script type="text/javascript" src="js/jquery.jqDock.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var jqDockOpts = {align: 'left', duration: 200, labels: 'tc', size: 50, distance: 90};
+			$('#jqDock').jqDock(jqDockOpts);
+		});
+		 function transfer(url){
+                frames[1].location.href=url;
+            }
+           //驗證
+		   function pre_report(){
+				jQuery.ajax({
+					   url: 'check_session.php',
+					   type: 'GET',
+					   async: false,
+					   error:
+                        function(xhr) {alert('Ajax request 發生錯誤');},
+                    success:
+                        function(str){
+							if(str === 'YES'){
+								jQuery.ajax({
+									url: 'check_decision.php',
+									type:'GET',
+									async:false,
+									data: {type:'4',key:'month'},
+									error:
+										function(xhr) {alert('Ajax request 發生錯誤');},
+									success:
+										function(str){
+										if(str=="1|1")
+											alert("一月尚未有報表!")//(′．ω．‵)
+										else TINY.box.show({iframe:'each_report2.php',boxid:'frameless',width:1300,height:760,style:"z-index:2; top:30px",fixed:false,maskid:'bluemask',maskopacity:40,closejs:function(){closeJS()}});
+									}
+								});
+							}
+							else if(str === 'NO'){
+								alert('頁面已過期，請重新登入!');
+								document.location.href="../abc_login/player_login.php";
+							}
+						}
+				});
+                
+            }
+            function dupont(){
+				jQuery.ajax({
+					   url: 'check_session.php',
+					   type: 'GET',
+					   async: false,
+					   error:
+                        function(xhr) {alert('Ajax request 發生錯誤');},
+                    success:
+                        function(str){
+							if(str === 'YES'){
+								jQuery.ajax({
+									url: 'check_decision.php',
+									type:'GET',
+									async:false,
+									data: {type:'4',key:'month'},
+									error:
+										function(xhr) {alert('Ajax request 發生錯誤');},
+									success:
+										function(str){
+										if(str=="1|1")
+											alert("一月尚未有報表!")
+										else frames[0].location.href="dupont.php";
+									}
+								});
+							}
+							else if(str === 'NO'){
+								alert('頁面已過期，請重新登入!');
+								document.location.href="../abc_login/player_login.php";
+							}
+						}
+					});
+            }
+            function rank(){
+				jQuery.ajax({
+					   url: 'check_session.php',
+					   type: 'GET',
+					   async: false,
+					   error:
+                        function(xhr) {alert('Ajax request 發生錯誤');},
+                    success:
+                        function(str){
+							if(str === 'YES'){
+								jQuery.ajax({
+									url: 'check_decision.php',
+									type:'GET',
+									async:false,
+									data: {type:'4',key:'month'},
+									error:
+										function(xhr) {alert('Ajax request 發生錯誤');},
+									success:
+										function(str){
+										if(str=="1|1")
+											alert("一月尚未有資料可以分析!")
+										else frames[0].location.href="rank.php";
+									}
+								});
+							}
+							else if(str === 'NO'){
+								alert('頁面已過期，請重新登入!');
+								document.location.href="../abc_login/player_login.php";
+							}
+						}
+				   });
+            }
+            function home(){
+				jQuery.ajax({
+					   url: 'check_session.php',
+					   type: 'GET',
+					   async: false,
+					   error:
+                        function(xhr) {alert('Ajax request 發生錯誤');},
+                    success:
+                        function(str){
+							if(str === 'YES'){
+				                frames[0].location.href="anime.html";
+							}else if(str === 'NO'){
+								alert('頁面已過期，請重新登入!');
+								document.location.href="../abc_login/player_login.php";
+							}
+						}
+					});
+            }
+            function decision(){
+				jQuery.ajax({
+					   url: 'check_session.php',
+					   type: 'GET',
+					   async: false,
+					   error:
+                        function(xhr) {alert('Ajax request 發生錯誤');},
+                    success:
+                        function(str){
+							if(str === 'YES'){
+				                frames[0].location.href="decision.html";
+							}else if(str === 'NO'){
+								alert('頁面已過期，請重新登入!');
+								document.location.href="../abc_login/player_login.php";
+							}
+						}
+					});
+            }
+            function information(){
+				jQuery.ajax({
+					   url: 'check_session.php',
+					   type: 'GET',
+					   async: false,
+					   error:
+                        function(xhr) {alert('Ajax request 發生錯誤');},
+                    success:
+                        function(str){
+							if(str === 'YES'){
+				                frames[0].location.href="./LeftFeatures/Company_info/companyinfo.php";
+							}else if(str === 'NO'){
+								alert('頁面已過期，請重新登入!');
+								document.location.href="../abc_login/player_login.php";
+							}
+						}
+					});
+            }
+            function journal(){
+					jQuery.ajax({
+					   url: 'check_session.php',
+					   type: 'GET',
+					   async: false,
+					   error:
+                        function(xhr) {alert('Ajax request 發生錯誤');},
+                    success:
+                        function(str){
+							if(str === 'YES'){
+ 				               TINY.box.show({iframe:'journal.html',boxid:'frameless',width:800,height:500,style:"z-index:2;top:30px",fixed:false,maskid:'bluemask',maskopacity:40,closejs:function(){closeJS()}});
+							}else if(str === 'NO'){
+								alert('頁面已過期，請重新登入!');
+								document.location.href="../abc_login/player_login.php";
+							}
+						}
+					});				
+            }
+	</script>
+
+</head>
+<body>
+  <table width=100% height="12%">
+      <td width="1%"></td> 
+      <td width="2%" title="back"><a href="javascript:history.back()"><img src="images/1-navigation-back.png" width="32" height="34" /></a></td>
+      <td width="2%" title="forward"><a href="javascript:history.forward()"><img src="images/1-navigation-forward.png" width="32" height="34" /></a></td>
+      <td width="2%" title="main"><a href="index.html"><img src="images/12-hardware-dock.png" width="32" height="34" /></a></td>
+      <td width="2%"></td>
+      <td width="22%"> 公司名稱:</td>
+      <td width="3%"></td>
+      <td width="22%"> 帳號 :</td>
+      <td width="28%"></td>
+      <td width="10%" align="right" title="logout"><img src="images/logout.png" width="32" height="32" onclick="scr='./logout.php'"/></td>
+      <td width="0.9%"></td>
+
+  </table>
+<div id="header2">
+  <ul id="webmenu" class="first-menu">
+ <li><a style="color:#ff6; background:none; border:none; font-size:13px;" target="_self"><strong>第 1 年&nbsp;&nbsp;  1 月</strong></a></li>
+ <li><a target="_self">公司治理</a></li>
+   <li><a href="#" target="_self">獲利模式</a>
+    <ul style="display: none;" id="subMusic" class="second-menu">
+      <li><a href="#" onclick="document.getElementById('contentiframe').src='./ProfitModel/selling_cost_analyzing.php'">銷貨成本分析</a></li>
+      <li><a href="#" onclick="document.getElementById('contentiframe').src='./ProfitModel/revenue_model.php'">營收來源</a> </li>
+    </ul>
+  </li>
+   <li><a href="#" class="arrow" target="_self">投入與合一</a>
+    <ul style="display: none;" id="subMgm" class="second-menu">
+      <li><a href="#" onclick="document.getElementById('contentiframe').src='./ResourceIntegration/fund_raising.html'" >資金募集</a></li>
+      <li><a href="#" onclick="document.getElementById('contentiframe').src='./ResourceIntegration/research_and_develop.php'">研究 / 開發</a>
+      </li>
+      <li><a href="#" class="arrow" target="_self">資產購置 / 處分</a>
+        <ul class="third-menu">
+          <li><a href="#" onclick="document.getElementById('contentiframe').src='./ResourceIntegration/purchase_machine.php'">購買資產</a>
+          </li>
+          <li><a href="#" onclick="document.getElementById('contentiframe').src='./ResourceIntegration/sell_machine.php'">處分資產</a>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#" id="buy_m" onclick="document.getElementById('contentiframe').src='./ResourceIntegration/purchase_material.php'">購買 / 分配原料</a>
+      </li>
+    </ul>
+  </li> 
+  <li><a href="#" class="arrow" target="_self">價值作業</a>
+    <ul style="display: none;" id="subMgm" class="second-menu">
+      <li><a href="#" onclick="document.getElementById('contentiframe').src='./ValueWork/production_final.php'">生產規劃</a>
+      </li>
+      <li><a href="#" onclick="document.getElementById('contentiframe').src='./ValueWork/process_improvement.php'">流程改良</a>
+      </li>
+     
+    </ul>
+  </li> <li><a href="#" class="arrow" target="_self">團隊學習</a>
+    <ul style="display: none;" id="subMgm" class="second-menu">
+      <li><a href="#" onclick="document.getElementById('contentiframe').src='./GroupLearning/hire.html'">招 / 解聘員工</a>
+      </li>
+      <li> <a href="#" onclick="document.getElementById('contentiframe').src='./GroupLearning/employee_training.php'">在職訓練</a>
+      </li>
+      <li><a href="#" onclick="document.getElementById('contentiframe').src='./GroupLearning/efficiency_evaluate.html'">人員效率評估</a> 
+      </li> 
+    </ul>
+  </li>
+  <li><a href="#" class="arrow" target="_self">市場聚焦</a>
+    <ul style="display: none;" id="subMgm" class="second-menu">
+      <li><a href="#"  onclick="document.getElementById('contentiframe').src='./MarketFocus/advertisement.php'">廣告促銷</a>
+      <li><a href="#" class="arrow" target="_self">接單</a>
+     	<ul class="third-menu">
+        	<li><a href="#" onclick="document.getElementById('contentiframe').src='./MarketFocus/taiwan_order.php'">國內訂單</a></li>
+          	<li><a href="#" onclick="document.getElementById('contentiframe').src='./MarketFocus/oversea_order.php'">國外訂單</a></li>
+        </ul>
+      </li>
+      <li><a href="#" class="arrow" target="_self">市場狀態</a>
+        <ul class="third-menu">
+          <li><a href="#" onclick="document.getElementById('contentiframe').src='./MarketFocus/market_share.html'">市場占有率</a></li>
+          <li><a href="#" onclick="document.getElementById('contentiframe').src='./MarketFocus/market_share_history.html'">市場需求變化</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+    <li><a href="#" target="_self">價值主張</a>
+    <ul id="subNews" class="second-menu">
+      <li><a href="#" onclick="document.getElementById('contentiframe').src='./ValueProposition/customer_orderResult.php'">顧客訂單量</a>
+      </li>
+      <li> 
+      <a onclick="document.getElementById('contentiframe').src='./ValueProposition/customer_satisfaction.php'">顧客滿意度</a>
+      </li>
+     </ul>
+  </li>
+  <li><a href="#" class="arrow" target="_self">價值關係</a>
+    <ul style="display: none;" id="subMgm" class="second-menu">
+      <li><a href="#" onclick="document.getElementById('contentiframe').src='./ValueRelationship/relationship_management.php'">關係管理</a>
+      </li>
+      <li><a href="#" onclick="document.getElementById('contentiframe').src='./ValueRelationship/donate.php'">企業社會責任</a>
+      </li>
+    </ul>
+  </li>
+</ul>
+</div>
+<div id="blank" align="center">
+  <p>    
+  <p>
+  <p>
+  <p>
+  <p>
+  <p>    
+  <p>             
+</div>
+<!-- BEGIN DOCK 2 ============================================================ -->
+	<div id="dockContainer">
+		<ul id="jqDock">
+            <p><p><p>  
+			<li class="content"></li>
+			<li class="content"></li>
+			<li class="content"><a href="#" class="dockItem" onclick="document.getElementById('contentiframe').src='./LeftFeatures/Company_info/companyinfo.php'"><img src="images/5-content-paste.png" alt="Home" align="absmiddle" title="公&nbsp;司&nbsp;資&nbsp;訊" /></a></li>
+			<li class="content"><a href="#" class="dockItem" onclick="document.getElementById('contentiframe').src='./LeftFeatures/each_report2.php'"><img src="images/5-content-copy.png" alt="Contact" align="absmiddle" title="報&nbsp;表" /></a></li>
+            <li class="content"><a href="#" class="dockItem" onclick="document.getElementById('contentiframe').src='SVD/decision.php'"><img src="images/4-checklist.png" alt="Contact" align="absmiddle" title="決&nbsp;策&nbsp;總&nbsp;覽" /></a></li>
+			<li class="content"><a href="#" class="dockItem" onclick="document.getElementById('contentiframe').src='./LeftFeatures/dupont.php'"><img src="images/4-collections-view-as-list.png" alt="portfolio" align="absmiddle" title="杜&nbsp;邦&nbsp;分&nbsp;析" /></a></li>
+			<li class="content"><a href="#" class="dockItem" onclick="document.getElementById('contentiframe').src='SVD/journal.html'"><img src="images/4-collections-go-to-today.png" alt="music" align="absmiddle" title="日&nbsp;記&nbsp;帳" /></a></li>
+			<li class="content"><a href="#" class="dockItem" onclick="document.getElementById('contentiframe').src='./LeftFeatures/rank.php'"><img src="images/6-social-cc-bcc.png" alt="video" align="absmiddle" title="競&nbsp;賽&nbsp;排&nbsp;名" /></a></li>
+			
+		</ul>
+</div><!-- end div #dockContainer -->
+	<!-- END DOCK 2 ============================================================ -->
+    
+<div id="content">
+                    <iframe id="contentiframe" width="1024" height="768" marginwidth="8" marginheight="0" frameborder="0" ></iframe>
+
+  
+    
+</div>
+</body>
+</html>

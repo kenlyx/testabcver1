@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="../css/tableyellow.css" type="text/css" />
+        <script type="text/javascript" src="../js/jquery.js"></script>
+        <script type="text/javascript">
+            var type=1;
+            var month=1;
+            $(document).ready(function(){
+                $("#s_div").load("./income_statement.php",{'type':""+type, 'month':""+month});
+                $("#right").click(function(){
+                    month+=1;
+                    $("#s_div").load("./income_statement.php",{'type':""+type, 'month':""+month});
+                });
+                $("#left").click(function(){
+                    if(month-1 > 0)
+                        month-=1;
+                    else
+                        alert("前面沒東西了啦~!!");
+                    $("#s_div").load("./income_statement.php",{'type':""+type, 'month':""+month});
+                });
+                $("#month").click(function(){
+                    type=1;
+                    month=1;
+                    $("#s_div").load("./income_statement.php",{'type':""+type, 'month':""+month});
+                });
+                $("#season").click(function(){
+                    type=2;
+                    month=1;
+                    $("#s_div").load("./income_statement.php",{'type':""+type, 'month':""+month});
+                });
+                $("#year").click(function(){
+                    type=3;
+                    month=1;
+                    $("#s_div").load("./income_statement.php",{'type':""+type, 'month':""+month});
+                });
+                $("#back").click(function(){
+                    location.href="./pre_report.html";
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <table border="0" height="103%">
+            <tr><th colspan="3" height="80">
+                    <input id="month" type="image" src="../images/report_month.png" title="月報" width="50" >
+                    <input id="season" type="image" src="../images/report_season.png" title="季報" width="50">
+                    <input id="year" type="image" src="../images/report_year.png" title="年報" width="50">
+                    <input id="back" type="image" src="../images/next.png" title="重新選擇" width="50">
+            </tr>
+            <tr><th height="400"><input type="image" id="left" src="../images/left.png"></th>
+                <th height="400"><div id="s_div"></div></th>
+                <th height="400"><input type="image" id="right" src="../images/right.png"></th></tr>
+        </table>
+    </body>
+</html>

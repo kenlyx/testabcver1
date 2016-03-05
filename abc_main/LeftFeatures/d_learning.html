@@ -1,0 +1,265 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="../js/progress-bar-pager/ext-all.css">
+        <link rel="stylesheet" type="text/css" href="../js/progress-bar-pager/ext-patch.css">
+        <script type="text/javascript" src="../js/jquery.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/ext-base.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/ext-all.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/ProgressBarPager.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/PanelResizer.js"></script>
+        <script type="text/javascript" src="../js/progress-bar-pager/PagingMemoryProxy.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var showed_hire=0,showed_fire=0,showed_train=0;
+                var myData;
+                $(".A").click(function(){
+                    if(showed_hire==0){
+                        if(showed_fire==1){
+                            display("fire","none");
+                        }
+                        if(showed_train==1){
+                            display("training","none");
+                        }
+                        show_hire();
+                        showed_hire=1;
+                    }
+                    else{
+                        if(showed_fire==1){
+                            display("fire","none");
+                        }
+                        if(showed_train==1){
+                            display("training","none");
+                        }
+                        display("hire","block");
+                    }
+                });
+                $(".B").click(function(){
+                    if(showed_fire==0){
+                        if(showed_hire==1){
+                            display("hire","none");
+                        }
+                        if(showed_train==1){
+                            display("training","none");
+                        }
+                        show_fire();
+                        showed_fire=1;
+                    }
+                    else{
+                        if(showed_hire==1){
+                            display("hire","none");
+                        }
+                        if(showed_train==1){
+                            display("training","none");
+                        }
+                        display("fire","block");
+                    }
+                });
+                $(".C").click(function(){
+                    if(showed_train==0){
+                        if(showed_hire==1){
+                            display("hire","none");
+                        }
+                        if(showed_fire==1){
+                            display("fire","none");
+                        }
+                        show_train();
+                        showed_train=1;
+                    }
+                    else{
+                        if(showed_hire==1){
+                            display("hire","none");
+                        }
+                        if(showed_fire==1){
+                            display("fire","none");
+                        }
+                        display("training","block");
+                    }
+                });
+                function display(id,method){
+                    var id=document.getElementById(id);
+                    id.style.display=method;
+                }
+            });
+            function show_hire(){
+
+                $.ajax({
+                    url: 'd_learning.php',
+                    type:'GET',
+                    data: 'option=hire',
+                    error: function(xhr) {alert('Ajax request error');}, 
+                    success: function(str){
+                        myData = eval('(' + str + ')');
+                        var store = new Ext.data.Store({
+                            proxy: new Ext.ux.data.PagingMemoryProxy(myData),
+                            remoteSort:true,
+                            reader: new Ext.data.ArrayReader({
+                                fields: [
+                                    {name: 'year'},
+                                    {name: 'month'},
+                                    {name: 'department'},
+                                    {name: 'number'},
+                                    {name: 'price'}
+                                ]
+                            })
+                        });
+                        // create the Grid
+                        var grid = new Ext.grid.GridPanel({
+                            store: store,
+                            columns: [
+                                {header: "年", width: 50, sortable: true, dataIndex: 'year'},
+                                {header: "月", width: 50, sortable: true, dataIndex: 'month'},
+                                {header: "性質", width: 120, sortable: true, dataIndex: 'department'},
+                                {header: "招聘人數", width: 80, sortable: true, dataIndex: 'number'},
+                                {header: "花費", width: 80, sortable: true, dataIndex: 'price'}
+                            ],
+                            stripeRows: true,
+                            height:400,
+                            width:670,
+                            frame:true,
+                            title:'決策--招聘員工',
+                            plugins: new Ext.ux.PanelResizer({
+                                minHeight: 100
+                            }),
+                            bbar: new Ext.PagingToolbar({
+                                pageSize: 10,
+                                store: store,
+                                displayInfo: true,
+                                plugins: new Ext.ux.ProgressBarPager()
+                            })
+                        });
+                        grid.render('hire');
+                        store.load({params:{start:0, limit:10}});
+                    }
+                });
+            };
+            function show_fire(){
+                $.ajax({
+                    url: 'd_learning.php',
+                    type:'GET',
+                    data: 'option=fire',
+                    error: function(xhr) {alert('Ajax request error');}, 
+                    success: function(str){
+                        myData = eval('(' + str + ')');
+
+                        var store = new Ext.data.Store({
+                            proxy: new Ext.ux.data.PagingMemoryProxy(myData),
+                            remoteSort:true,
+                            reader: new Ext.data.ArrayReader({
+                                fields: [
+                                    {name: 'year'},
+                                    {name: 'month'},
+                                    {name: 'department'},
+                                    {name: 'number'},
+                                    {name: 'price'}
+                                ]
+                            })
+                        });
+
+                        // create the Grid
+                        var grid = new Ext.grid.GridPanel({
+                            store: store,
+                            columns: [
+                                {header: "年", width: 50, sortable: true, dataIndex: 'year'},
+                                {header: "月", width: 50, sortable: true, dataIndex: 'month'},
+                                {header: "性質", width: 120, sortable: true, dataIndex: 'department'},
+                                {header: "解聘人數", width: 80, sortable: true, dataIndex: 'number'},
+                                {header: "花費", width: 80, sortable: true, dataIndex: 'price'}
+                            ],
+                            stripeRows: true,
+                            height:400,
+                            width:670,
+                            frame:true,
+                            title:'決策--解聘員工',
+
+                            plugins: new Ext.ux.PanelResizer({
+                                minHeight: 100
+                            }),
+
+                            bbar: new Ext.PagingToolbar({
+                                pageSize: 10,
+                                store: store,
+                                displayInfo: true,
+                                plugins: new Ext.ux.ProgressBarPager()
+                            })
+                        });
+
+                        grid.render('fire');
+
+                        store.load({params:{start:0, limit:10}});
+                    }
+                });
+            };
+            function show_train(){
+
+                $.ajax({
+                    url: 'd_learning.php',
+                    type:'GET',
+                    data: 'option=train',
+                    error: function(xhr) {alert('Ajax request error');}, 
+                    success: function(str){
+                        myData = eval('(' + str + ')');
+                        var store = new Ext.data.Store({
+                            proxy: new Ext.ux.data.PagingMemoryProxy(myData),
+                            remoteSort:true,
+                            reader: new Ext.data.ArrayReader({
+                                fields: [
+                                    {name: 'year'},
+                                    {name: 'month'},
+                                    {name: 'department'},
+                                    {name: 'price'}
+                                ]
+                            })
+                        });
+                        // create the Grid
+                        var grid = new Ext.grid.GridPanel({
+                            store: store,
+                            columns: [
+                                {header: "年", width: 50, sortable: true, dataIndex: 'year'},
+                                {header: "月", width: 50, sortable: true, dataIndex: 'month'},
+                                {header: "性質", width: 120, sortable: true, dataIndex: 'department'},
+                                {header: "花費", width: 80, sortable: true, dataIndex: 'price'}
+                            ],
+                            stripeRows: true,
+                            height:400,
+                            width:670,
+                            frame:true,
+                            title:'決策--在職訓練',
+                            plugins: new Ext.ux.PanelResizer({
+                                minHeight: 100
+                            }),
+                            bbar: new Ext.PagingToolbar({
+                                pageSize: 10,
+                                store: store,
+                                displayInfo: true,
+                                plugins: new Ext.ux.ProgressBarPager()
+                            })
+                        });
+                        grid.render('training');
+                        store.load({params:{start:0, limit:10}});
+                    }
+                });
+            };
+            
+        </script>
+
+    </head>
+    <body>
+    	<div style="float:right; margin-right:36%; height:auto">
+        	<div id="hire"></div>
+        	<div id="fire"></div>
+        	<div id="training"></div>
+        </div>
+        <div align="left" style="margin-left:1%">
+        	<input type="image" src="../images/decision/hire.png" title="招募" class="A"><br>
+        	<input type="image" src="../images/decision/fire.png" title="解雇" class="B"><br>
+        	<input type="image" src="../images/decision/training.png" title="在職訓練" class="C"><br>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+.cust_checkbox{
+	font-size:14px;
+	cursor: pointer;
+}
+.cust_checkbox_on{
+	background:url(checkbox_on.png) no-repeat 0 0;
+}
+.cust_radio_on{
+	background:url(radiobox_on.png) no-repeat 0 0;
+}
+.cust_checkbox_off{
+	background:url(checkbox_off.png) no-repeat 0 0;
+}
+.cust_radio_off{
+	background:url(checkbox_off.png) no-repeat 0 0;
+}
+.cust_checkbox_disabled_on{
+	background:url(checkbox_disabled_on.png) no-repeat 0 0;
+}
+.cust_checkbox_disabled_off{
+	background:url(disabled_off.png) no-repeat 0 0;
+}
+.cust_radio_disabled_on{
+	background:url(radiobox_disabled_on.png) no-repeat 0 0;
+}
+.cust_radio_disabled_off{
+	background:url(disabled_off.png) no-repeat 0 0;
+}
+.group{
+	color:#333;
+}
+fieldset{
+		border:1px solid #ccc;	
+}
+fieldset label{
+	color:#999;	
+}

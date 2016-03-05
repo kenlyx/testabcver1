@@ -1,0 +1,48 @@
+@charset "UTF-8";
+/**
+ * JavaScript/Ajax Samples
+ * @module style
+ */
+
+/* header
+ ---------------------------------------- */
+#header h1 {
+	font-size: 2.4em;
+}
+
+/* container
+ ---------------------------------------- */
+#container h2 {
+	line-height: 3em;
+}
+
+#read {
+	border-top: 1.2em solid #a51809;
+}
+
+#read p {
+	padding: 1em 1em 2em;
+}
+
+#contact dt {
+	width: 3em;
+}
+
+#contact dd {
+	margin: -1.2em 0 0;
+	padding: 0 0 1em 4em;
+}
+
+#links li {
+	line-height: 2em;
+}
+
+/* footer
+ ---------------------------------------- */
+#footer address {
+	text-align: center;
+	line-height: 4em;
+}
+
+/* class
+ ---------------------------------------- */

@@ -1,0 +1,69 @@
+@charset "UTF-8";
+/**
+ * JavaScript/Ajax Samples
+ * @module style
+ */
+
+/* header
+ ---------------------------------------- */
+#header h1 {
+	font-size: 150%;
+	font-weight: bolder;
+}
+
+/* container
+ ---------------------------------------- */
+#container {
+	background: #dedede url('../_images/') no-repeat;
+}
+
+#navi {
+	border: 1px solid #ccc;
+}
+
+#navi li {
+	border-bottom: 1px solid #ccc;
+	color: #000;
+	line-height: 2.5em;
+	text-indent: 1em;
+	text-decoration: none;
+}
+
+#ticker {
+	border: 1px solid #ccc;
+}
+
+#ticker li {
+	color: #000;
+}
+
+#ticker h2 {
+	font-size: 120%;
+	font-weight: bolder;
+	border-bottom: 1px solid #ccc;
+}
+
+#ticker dl {
+	line-height: 2.5em;
+}
+
+#ticker p {
+	line-height: 1.5em;
+}
+
+/* footer
+ ---------------------------------------- */
+#footer {
+	font-size: 80%;
+}
+
+/* class左排標籤顏色
+ ---------------------------------------- */
+ /*現在正在顯示的該頁標籤顏色*/
+.onCounter {
+	background-color: #B0E2FF;
+}
+ /*平時的標籤顏色*/
+ .offCounter {
+	background-color: #8DB6CD;
+}

@@ -1,0 +1,42 @@
+#decision_table{
+	float:left;
+	left:4%;
+}
+.decision {
+	width: 450px;
+	height: 650px;
+}
+.decision a {
+	position: absolute;
+	top: 10%;
+	z-index:50;
+}	
+
+/* 圖片裁切顯示 */
+.picture {
+	overflow:hidden; 
+	width:95px;
+	height:107px; 
+}
+
+/* 放置區 */
+.place_area {
+	border: dashed 1px #333;
+	background-color: #eee;	
+	height: 110px;
+	width:152%;
+	margin:10px;
+}
+.place_area a {
+	float: left;
+	margin: 2px 2px 2px;
+}
+.place_area:hover{
+	background-color: #ffe45c;	
+}
+
+/* 放置區的總區塊*/
+#place_table {
+	width: 560px;
+	height: 400px;
+}

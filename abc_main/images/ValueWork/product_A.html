@@ -1,0 +1,364 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="./for slider/jquery.ui.all.css">
+        <script type="text/javascript" src="../js/jquery.js"></script>
+        <script src="./for slider/jquery-ui-1.8.14.slider.min.js"></script>
+        <script type="text/javascript" src="../js/tinybox.js"></script>
+        <link rel="stylesheet" href="../css/style.css"/>
+        <script type="text/javascript">
+            var amount=0,rest_m1=0,rest_m2=0,rest_m3=0,tra=0,trb=0,trc=0,percent=0;
+            var r_aa=0,r_ba=0,r_ca=0,r_ab=0,r_bb=0,r_cb=0,r_ac=0,r_bc=0,r_cc=0;
+            var i_aa=0,i_ba=0,i_ca=0,i_ab=0,i_bb=0,i_cb=0,i_ac=0,i_bc=0,i_cc=0;
+			var sA=0,sB=0,sC=0,rest_amount=0
+            var limit=0,count=0,power=0;
+            var machine_limit=0,used=0;
+            $(document).ready(function(){
+                initial();
+
+                function initial(){
+                    $.ajax({
+                        url:"product_limit.php",
+                        type: "GET",
+                        datatype: "html",
+                        data: {type:"A"},
+                        success: function(str){
+                            s_str=str.split("|")
+                            used=parseInt(s_str[1]);
+                            power=parseInt(s_str[0]);
+                            initial_2();
+                        }
+                    });
+                }
+                function initial_2(){
+                    $.ajax({
+                        url:"../GroupLearning/hire_process.php",
+                        type: "GET",
+                        datatype: "html",
+                        data: {type:"equip"},
+                        success: function(str){
+                            arr=str.split("|");
+                            count=parseInt(arr[0]);
+                            //alert(count);
+                            limit=power*count-used;
+                            initial_get();
+                        }
+                    });
+                }
+                function initial_get(){
+                    $.ajax({
+                        url:"GET_product_plan.php",
+                        type: "GET",
+                        datatype: "html",
+                        data: "option=get&type=A",
+                        success: function(str){
+							alert(str);
+                            var word=str.split(":");
+							
+							
+							
+							
+                            i_aa=document.getElementById("A_inventoryA").textContent=parseInt(word[0],10)-parseInt(word[18],10);
+                            i_ba=document.getElementById("B_inventoryA").textContent=parseInt(word[1],10)-parseInt(word[19],10);
+                            i_ca=document.getElementById("C_inventoryA").textContent=parseInt(word[2],10)-parseInt(word[20],10);
+                            i_ab=document.getElementById("A_inventoryB").textContent=parseInt(word[3],10)-parseInt(word[21],10);
+                            i_bb=document.getElementById("B_inventoryB").textContent=parseInt(word[4],10)-parseInt(word[22],10);
+                            i_cb=document.getElementById("C_inventoryB").textContent=parseInt(word[5],10)-parseInt(word[23],10);
+                            i_ac=document.getElementById("A_inventoryC").textContent=parseInt(word[6],10);
+                            i_bc=document.getElementById("B_inventoryC").textContent=parseInt(word[7],10);
+                            i_cc=document.getElementById("C_inventoryC").textContent=parseInt(word[8],10);
+                            r_aa=document.getElementById("A_requireA").textContent=parseInt(word[9],10);
+                            r_ba=document.getElementById("B_requireA").textContent=parseInt(word[10],10);
+                            r_ca=document.getElementById("C_requireA").textContent=parseInt(word[11],10);
+                            r_ab=document.getElementById("A_requireB").textContent=parseInt(word[12],10);
+                            r_bb=document.getElementById("B_requireB").textContent=parseInt(word[13],10);
+                            r_cb=document.getElementById("C_requireB").textContent=parseInt(word[14],10);
+                            r_ac=document.getElementById("A_requireC").textContent=parseInt(word[15],10);
+                            r_bc=document.getElementById("B_requireC").textContent=parseInt(word[16],10);
+                            r_cc=document.getElementById("C_requireC").textContent=parseInt(word[17],10);
+                            m1=document.getElementById("materialA").textContent=i_aa+i_ba+i_ca;
+                            m2=document.getElementById("materialB").textContent=i_ab+i_bb+i_cb;
+                            m3=document.getElementById("materialC").textContent=i_ac+i_bc+i_cc;
+                            sA=rest_m1=Math.min((i_aa!=0)?i_aa:0,(i_ab!=0)?i_ab:0,(i_ac!=0)?i_ac:0);
+                            sB=rest_m2=Math.min((i_ba!=0)?i_ba:0,(i_bb!=0)?i_bb:0,(i_bc!=0)?i_bc:0);
+                            sC=rest_m3=Math.min((i_ca!=0)?i_ca:0,(i_cb!=0)?i_cb:0,(i_cc!=0)?i_cc:0);
+                            tra=document.getElementById("total_requireA").textContent=r_aa+r_ba+r_ca;
+                            trb=document.getElementById("total_requireB").textContent=r_ab+r_bb+r_cb;
+                            trc=document.getElementById("total_requireC").textContent=r_ac+r_bc+r_cc;
+                            amount=document.getElementById("quantity").textContent=tra;//要看產品的原料需求比例更改
+							rest_amount=sA+sB+sC;
+							//alert(sA+"@"+sB+"@"+sC)
+                            if(amount==0)//直接用amount的話slider.value會有分母為零的情況
+                                initial_amount=1;
+                            else
+                                initial_amount=amount;
+                            percent=parseInt((r_aa+r_ba+r_ca)*1000/initial_amount,10);//+parseInt(r_ba*100/initial_amount,10)+parseInt(r_ca*100/initial_amount,10)
+                            get_machine();
+                        }
+                    });
+                }
+                function get_machine(){
+                    $.ajax({
+                        url:"GET_product_plan.php",
+                        type: "GET",
+                        datatype: "html",
+                        data: {option:'get_machine',
+                            type: 'A'},
+                        success: function(str){
+                            machine_limit=str;
+                            create_slider();
+                        }
+                    });
+                }
+                function click_set(){
+                    $(".add").click(function(){
+                        if(rest_amount>0&&(amount<limit)&&(amount<machine_limit)){
+                            amount+=50;
+                            rest_amount=sA+sB+sC-amount;
+                            while(rest_amount<0||(amount>limit)||(amount>machine_limit)){
+                                rest_amount++;
+                                amount--;
+                            }
+                        }
+                        else{
+                            if(!(rest_amount>0))
+                                alert("原料不足!!")
+                            else if(amount>=machine_limit)
+                                alert("產能不足!!")
+                            else
+                                alert("目前的員工無法負荷此工作量~!!");
+                        }
+                        document.getElementById("quantity").textContent=amount;
+                    });
+
+                    $(".sub").click(function(){
+                        if(amount>0){
+                            amount-=50;
+                            rest_amount=sA+sB+sC-amount;
+                            while(amount<0){
+                                rest_amount--;
+                                amount++;
+                            }
+                        }
+                        else alert("沒得扣囉~")
+                        document.getElementById("quantity").textContent=amount;
+                    });
+
+                    $(".submit").click(function(){
+                        if(percent!=1000)
+                            alert("分配不夠喔~")
+                        else
+                            $.ajax({
+                                url:"GET_product_plan.php",
+                                type: "GET",
+                                datatype: "html",
+                                data: "option=update&type=A&a_supplyA="+r_aa+"&a_supplyB="+r_ba+"&a_supplyC="+r_ca+"&b_supplyA="+r_ab+"&b_supplyB="+r_bb+"&b_supplyC="+r_cb+"&c_supplyA="+r_ac+"&c_supplyB="+r_bc+"&c_supplyC="+r_cc,
+                                success: function(str){
+                                    //alert("SUCCESS~!!")
+                                    alert("Success!");
+									//journal();
+                                }
+                        });
+                    })
+                }
+
+                function create_slider(){
+                    $( "#sliderA" ).slider({
+                        value:r_aa*1000/initial_amount,min: 0,max: 1000,step: 1,	range: "min",
+                        start: function( event, ui ) {
+                            percent-=ui.value//slide之前先減掉自己的百分比
+                        },
+                        slide: function( event, ui ) {
+                            r_aa=parseInt(ui.value*amount*0.001)//下面判斷式用到的值的先給才不會超過就卡住
+                            r_ab=parseInt(ui.value*amount*0.001)
+                            r_ac=parseInt(ui.value*amount*0.001)
+                            if(percent+ui.value>1000||r_aa>i_aa||r_ab>i_ab||r_ac>i_ac)//判斷另外兩個的%數加上自己的是否超過100，還有是否超過庫存
+                                $().slider( value , ui.value ) //超過的話就停在現在的位置，$()裡面打什麼都沒差...看樣子執行到這一行就不會往下了0.0
+                            tra=r_aa+parseInt(r_ba)+parseInt(r_ca)//不加parseInt的話會出現神奇的事情所以只好加了...
+                            trb=r_ab+parseInt(r_bb)+parseInt(r_cb)//total要放在修正前才行喔~
+                            trc=r_ac+parseInt(r_bc)+parseInt(r_cc)
+                            if(percent+ui.value==1000&&tra/1!=amount){//誤差修正...
+                                var qq=amount-tra/1
+                                for(i=0;i<qq;i++){
+                                    r_aa++;r_ab++;r_ac++;
+                                }
+                                tra+=i;trb+=i;trc+=i;
+                            }
+                            document.getElementById("A_requireA").textContent=r_aa ;//判斷過沒問題後才顯示
+                            document.getElementById("A_requireB").textContent=r_ab ;
+                            document.getElementById("A_requireC").textContent=r_ac ;
+                            document.getElementById("total_requireA").textContent=tra;
+                            document.getElementById("total_requireB").textContent=trb;
+                            document.getElementById("total_requireC").textContent=trc;
+                        },
+                        stop: function( event, ui ) {
+                            percent+=ui.value//之後才加上去
+                            r_aa=document.getElementById("A_requireA").textContent;
+                            r_ab=document.getElementById("A_requireB").textContent;
+                            r_ac=document.getElementById("A_requireC").textContent;
+                        }
+                    });
+                    $( "#sliderB" ).slider({
+                        value:r_ba*1000/initial_amount,min: 0,max: 1000,step: 1,	range: "min",
+                        start: function( event, ui ) {
+                            percent-=ui.value
+                        },
+                        slide: function( event, ui ) {
+                            r_ba=parseInt(ui.value*amount*0.001)
+                            r_bb=parseInt(ui.value*amount*0.001)
+                            r_bc=parseInt(ui.value*amount*0.001)
+                            if(percent+ui.value>1000||r_ba>i_ba||r_bb>i_bb||r_bc>i_bc)
+                                $().slider( value , ui.value )
+                            tra=parseInt(r_aa)+r_ba+parseInt(r_ca)
+                            trb=parseInt(r_ab)+r_bb+parseInt(r_cb)
+                            trc=parseInt(r_ac)+r_bc+parseInt(r_cc)
+                            if(percent+ui.value==1000&&tra/1!=amount){
+                                var qq=amount-tra/1
+                                for(i=0;i<qq;i++){
+                                    r_ba++;r_bb++;r_bc++;
+                                }
+                                tra+=i;trb+=i;trc+=i;
+                            }
+                            document.getElementById("B_requireA").textContent=r_ba ;
+                            document.getElementById("B_requireB").textContent=r_bb ;
+                            document.getElementById("B_requireC").textContent=r_bc ;
+                            document.getElementById("total_requireA").textContent=tra;
+                            document.getElementById("total_requireB").textContent=trb;
+                            document.getElementById("total_requireC").textContent=trc;
+                        },
+                        stop: function( event, ui ) {
+                            percent+=ui.value
+                            r_ba=document.getElementById("B_requireA").textContent;
+                            r_bb=document.getElementById("B_requireB").textContent;
+                            r_bc=document.getElementById("B_requireC").textContent;
+                        }
+                    });
+                    $( "#sliderC" ).slider({
+                        value:r_ca*1000/initial_amount,min: 0,max: 1000,step: 1,	range: "min",
+                        start: function( event, ui ) {
+                            percent-=ui.value
+                        },
+                        slide: function( event, ui ) {
+                            r_ca=parseInt(ui.value*amount*0.001)
+                            r_cb=parseInt(ui.value*amount*0.001)
+                            r_cc=parseInt(ui.value*amount*0.001)
+                            if(percent+ui.value>1000||r_ca>i_ca||r_cb>i_cb||r_cc>i_cc)
+                                $().slider( value , ui.value )
+                            tra=parseInt(r_aa)+parseInt(r_ba)+r_ca
+                            trb=parseInt(r_ab)+parseInt(r_bb)+r_cb
+                            trc=parseInt(r_ac)+parseInt(r_bc)+r_cc
+                            if(percent+ui.value==1000&&tra/1!=amount){
+                                var qq=amount-tra/1
+                                for(i=0;i<qq;i++){
+                                    r_ca++;r_cb++;r_cc++;
+                                }
+                                tra+=i;trb+=i;trc+=i;
+                            }
+                            document.getElementById("C_requireA").textContent=r_ca ;
+                            document.getElementById("C_requireB").textContent=r_cb ;
+                            document.getElementById("C_requireC").textContent=r_cc ;
+                            document.getElementById("total_requireA").textContent=tra;
+                            document.getElementById("total_requireB").textContent=trb;
+                            document.getElementById("total_requireC").textContent=trc;
+                        },
+                        stop: function( event, ui ) {
+                            percent+=ui.value
+                            r_ca=document.getElementById("C_requireA").textContent;
+                            r_cb=document.getElementById("C_requireB").textContent;
+                            r_cc=document.getElementById("C_requireC").textContent;
+                        }
+                    });
+                    click_set();
+                }
+                function journal(){
+                    TINY.box.show({iframe:'journal.html',boxid:'frameless',width:800,height:500,style:"z-index:2; top:30px",fixed:false,maskid:'bluemask',maskopacity:40,closejs:function(){closeJS()}});
+                }
+            });
+        </script>
+        <style type="text/css">
+            #total_material,#produce_amount,#supplyA,#supplyB,#supplyC{
+                margin:0px;
+                margin-left:auto;
+                margin-right:auto;
+                padding:5px;
+                background:#e5eecc;
+                border:solid 1px #c3c3c3;
+                filter:alpha(opacity=80);
+                -moz-opacity:0.8;
+                opacity: 0.8;
+            }
+            #materialA,#materialB,#materialC,#total_requireA,#total_requireB,#total_requireC,
+            #A_inventoryA,#A_inventoryB,#A_inventoryC,#B_inventoryA,#B_inventoryB,#B_inventoryC,#C_inventoryA,#C_inventoryB,#C_inventoryC,
+            #A_requireA,#A_requireB,#A_requireC,#B_requireA,#B_requireB,#B_requireC,#C_requireA,#C_requireB,#C_requireC{
+                margin:0px;
+                margin-left:auto;
+                margin-right:auto;
+                padding:5px;
+                background:ghostwhite;
+                border:solid 1px #c3c3c3;
+                filter:alpha(opacity=80);
+                -moz-opacity:0.8;
+                opacity: 0.8;
+            }
+            div.ui-slider{padding: 0;}	/*因為smart_tab.css的關係要加這兩行padding*/
+            div.ui-widget-header {padding: 0;background:#F6921E;}	/*background是因為slider的range用min比較合理的感覺，不然可以像purchase_materialA那樣用*/
+        </style>
+    </head>
+    <body>
+        <table align="center" width="100%" height="80%"><caption><font size="5">筆記型電腦</font></caption>
+            <tr><th>&nbsp;</th><td></td></tr>
+            <tr><th>&nbsp;</th><th colspan=2>螢幕與面板</th><th colspan=2>主機板與核心電路</th><th colspan=2>鍵盤基座</th></tr>
+            <tr><td>&nbsp;</td><td>庫存量</td><td>投入量</td><td>庫存量</td><td>投入量</td><td>庫存量</td><td>投入量</td></tr>
+            <tr><td id="supplyA" width="10%">供應商A</td>
+                <td id="A_inventoryA" width="10%">0</td>
+                <td id="A_requireA" width="10%">0</td>
+                <td id="A_inventoryB" width="10%">0</td>
+                <td id="A_requireB" width="10%">0</td>
+                <td id="A_inventoryC" width="10%">0</td>
+                <td id="A_requireC" width="10%">0</td>
+                <td width="30%"><div id="sliderA" style="width:90%;margin-left:15px;"></div></td>
+            </tr>
+            <tr><td id="supplyB" width="10%">供應商B</td>
+                <td id="B_inventoryA" width="10%">0</td>
+                <td id="B_requireA" width="10%">0</td>
+                <td id="B_inventoryB" width="10%">0</td>
+                <td id="B_requireB" width="10%">0</td>
+                <td id="B_inventoryC" width="10%">0</td>
+                <td id="B_requireC" width="10%">0</td>
+                <td width="30%"><div id="sliderB" style="width:90%;margin-left:15px;"></div></td>
+            </tr>
+            <tr><td id="supplyC" width="10%">供應商C</td>
+                <td id="C_inventoryA" width="10%">0</td>
+                <td id="C_requireA" width="10%">0</td>
+                <td id="C_inventoryB" width="10%">0</td>
+                <td id="C_requireB" width="10%">0</td>
+                <td id="C_inventoryC" width="10%">0</td>
+                <td id="C_requireC" width="10%">0</td>
+                <td width="30%"><div id="sliderC" style="width:90%;margin-left:15px;"></div></td>
+            </tr>
+
+            <tr><td id="total_material" width="10%">原料總數</td>
+                <td id="materialA" width="10%">0</td>
+                <td id="total_requireA" width="10%">0</td>
+                <td id="materialB" width="10%">0</td>
+                <td id="total_requireB" width="10%">0</td>
+                <td id="materialC" width="10%">0</td>
+                <td id="total_requireC" width="10%">0</td>
+            </tr>
+            <tr><td id="produce_amount" width="10%">生產數量</td>
+                <td align="right"><input type="image" src="../images/sub.png" class="sub"></td>
+                <td align="center"><span id="quantity">0</span></td>
+                <td><input type="image" src="../images/add.png" class="add"></td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td></td><td align="center" colspan=3><input type="image" src="../images/submit6.png" class="submit" width="100px"></td></tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,92 @@
+html,body{
+margin:0;
+padding:0;
+}
+.ctmtablepadding{
+padding: 0 !important;
+}
+
+table>tbody>tr>.ctm-padmag{
+   padding-top: 15px ;
+}
+a {
+  color: #4cae4c;
+  text-decoration: none;
+}
+a:hover{
+ color: #4b6e45;
+}
+
+@media (max-width: 768px){
+    h1{
+        font-size: 18px;
+    }
+    h2{
+        font-size: 14px;
+    }
+    h4{
+    font-size:10px;
+    }
+    .tabfont{
+    font-size: 12px;
+    }
+    .ctm-padding{
+        padding:0px;
+        }
+}
+
+.ctminputmag{
+  margin-top: 12px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1150px){
+    h3{
+    font-size:14px;
+    }
+    .ctminputmag{
+        margin-top: 7px;
+        margin-bottom: 4px;
+    }
+}
+
+
+
+.panel-margin{
+margin-top: 10px;
+}
+.ctm-contentpad{
+ padding-top: 10px;
+}
+@media (max-width: 768px){
+.ctm-contentpad{
+ padding-top: 0px;
+padding-left: 35px;
+}
+}
+
+.ctm-table{
+border: 1px solid #cccccc;
+}
+.ctm-tabletop{
+border-top: 1px solid #cccccc;
+}
+
+@media (max-width: 768px){
+.ctm-tabletop{
+border-top: none;
+}
+.ctm-tableright{
+border-left: 1px solid #cccccc;
+}
+}
+@media (min-width: 768px){
+.nonrap{
+white-space: nowrap;
+}
+}
+
+
+
+
+
