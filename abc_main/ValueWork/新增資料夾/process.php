@@ -4,7 +4,7 @@
 <?php
 header("Content-type: text/html; charset=utf-8"); 
 require_once("connMysql_ABC.php");
-$process = $_POST['process'];
+$process = mysql_real_escape_string($_POST['process']);
 $allprocess = implode (",",$process);
 //echo $process;
 echo "<br>";

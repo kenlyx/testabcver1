@@ -23,7 +23,7 @@ $check_query = "SELECT * FROM process_improvement WHERE `process`='成品檢驗'
 $check_result = mysql_query($check_query);
 
 
-$production_plan = $_POST['production_plan']; // 讀取被選擇的值放入 $production_plan 陣列中
+$production_plan = mysql_real_escape_string($_POST['production_plan']); // 讀取被選擇的值放入 $production_plan 陣列中
 echo "您已成功進行以下項目生產規劃"."<BR>";
 
 mysql_query("DELETE FROM production_plan WHERE `cid`='$cid' AND `year`='$year' AND `month`='$month' AND `process`='螢幕原料檢驗'");
@@ -79,18 +79,18 @@ mysql_query("DELETE FROM production_plan WHERE `cid`='$cid' AND `year`='$year'")
 		echo "fail<br>";
 	}*/
 	//機具
-$cut_mA=$_POST['machine_type'];
-$cut_mB=$_POST['machine_type'];
-$cut_mC=$_POST['machine_type'];
+$cut_mA=mysql_real_escape_string($_POST['machine_type']);
+$cut_mB=mysql_real_escape_string($_POST['machine_type']);
+$cut_mC=mysql_real_escape_string($_POST['machine_type']);
 
-$cp1_A=$_POST['cp1machine_type'];
-$cp1_B=$_POST['cp1machine_type'];
-$cp1_C=$_POST['cp1machine_type'];
+$cp1_A=mysql_real_escape_string($_POST['cp1machine_type']);
+$cp1_B=mysql_real_escape_string($_POST['cp1machine_type']);
+$cp1_C=mysql_real_escape_string($_POST['cp1machine_type']);
 
 
-$cp2_A=$_POST['cp2machine_type'];
-$cp2_B=$_POST['cp2machine_type'];
-$cp2_C=$_POST['cp2machine_type'];
+$cp2_A=mysql_real_escape_string($_POST['cp2machine_type']);
+$cp2_B=mysql_real_escape_string($_POST['cp2machine_type']);
+$cp2_C=mysql_real_escape_string($_POST['cp2machine_type']);
 
 $cut=0;
 $cp1=0;

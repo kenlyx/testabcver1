@@ -62,18 +62,18 @@
 	
 	//------------------------------------------------------------------------------------------------------------------------------------
 //Submit Decisions
-if(isset($_POST["subdecision"])&&$_POST["subdecision"]==true){
+if(isset(mysql_real_escape_string($_POST["subdecision"]))&&mysql_real_escape_string($_POST["subdecision"])==true){
 	mysql_query("DELETE FROM `authority` WHERE `cid`='$cid' and `year`<='$year'");
 	
-	$place1=split(",",$_POST["place1"]);
-	$place2=split(",",$_POST["place2"]);
-	$place3=split(",",$_POST["place3"]);
-	$place4=split(",",$_POST["place4"]);
-	$place5=split(",",$_POST["place5"]);
-	$place6=split(",",$_POST["place6"]);
-	$place7=split(",",$_POST["place7"]);
-	$pos=split(",",$_POST["pos"]);
-	$ceois=$_POST["ceo"];
+	$place1=split(",",mysql_real_escape_string($_POST["place1"]));
+	$place2=split(",",mysql_real_escape_string($_POST["place2"]));
+	$place3=split(",",mysql_real_escape_string($_POST["place3"]));
+	$place4=split(",",mysql_real_escape_string($_POST["place4"]));
+	$place5=split(",",mysql_real_escape_string($_POST["place5"]));
+	$place6=split(",",mysql_real_escape_string($_POST["place6"]));
+	$place7=split(",",mysql_real_escape_string($_POST["place7"]));
+	$pos=split(",",mysql_real_escape_string($_POST["pos"]));
+	$ceois=mysql_real_escape_string($_POST["ceo"]);
 	echo $pos[1];
 	for($i=2;$i<=$cnum;$i++){
 		if($place{$i}==""){
@@ -102,8 +102,8 @@ if(isset($_POST["subdecision"])&&$_POST["subdecision"]==true){
 }
 //將決策寫入資料庫 place1第一個人的決策區,C1-1(第一列第一個圖)...以此類推
 error_reporting(0);
-$place=$_POST["place"];
-$job=$_POST["job"];
+$place=mysql_real_escape_string($_POST["place"]);
+$job=mysql_real_escape_string($_POST["job"]);
 
 if($place=="place1"){
 	

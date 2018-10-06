@@ -10,7 +10,7 @@ $year=$_SESSION['year'];
 $month1 = $month + ($year-1)*12;
 
 
-//$process = $_POST['process'];
+//$process = mysql_real_escape_string($_POST['process']);
 //$allprocess = implode (",",$process);
 //echo $process;
 //echo "<br>";
@@ -39,7 +39,7 @@ $check_result = mysql_query($check_query);
 
 
 
-$process = $_POST['process']; // 讀取被選擇要改良流程的值放入 $process 陣列中
+$process = mysql_real_escape_string($_POST['process']); // 讀取被選擇要改良流程的值放入 $process 陣列中
 echo "您已成功進行以下項目流程改良"."<BR>";
 
 mysql_query("DELETE FROM process_improvement WHERE `cid`='$cid' AND `year`='$year' AND `month`='$month' AND `process`='螢幕原料檢驗'");
