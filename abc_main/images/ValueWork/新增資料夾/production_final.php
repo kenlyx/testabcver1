@@ -450,9 +450,9 @@ $row_result2=mysql_fetch_assoc($result2);
 			                 
 $query_insert = "INSERT INTO `102stuinfo` (`SupA_ProductB` ,`SupB_ProductB` ,`SupC_ProductB` ) VALUES (";
 
-		$query_insert .= "'".$_POST["SupA_ProductB"]."',";
-		$query_insert .= "'".$_POST["SupB_ProductB"]."',";
-		$query_insert .= "'".$_POST["SupC_ProductB"]."')";	
+		$query_insert .= "'".mysql_real_escape_string($_POST["SupA_ProductB"])."',";
+		$query_insert .= "'".mysql_real_escape_string($_POST["SupB_ProductB"])."',";
+		$query_insert .= "'".mysql_real_escape_string($_POST["SupC_ProductB"])."')";	
 		mysql_query($query_insert);
 
 ?

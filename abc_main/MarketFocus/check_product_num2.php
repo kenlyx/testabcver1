@@ -6,8 +6,8 @@
     $cid=$_SESSION['cid'];
     $month=$_SESSION['month'];
     $year=$_SESSION['year'];
-    $str=$_POST['str'];
-    if(!strcmp($_POST['type'], "1")){
+    $str=mysql_real_escape_string($_POST['str']);
+    if(!strcmp(mysql_real_escape_string($_POST['type']), "1")){
         $sum_a=0;
         $sum_b=0;
         $result_temp=mysql_query("SELECT SUM(batch) as sum FROM `product_quality` WHERE  `cid`='$cid' AND `product`='A'",$connect);
@@ -90,7 +90,7 @@
         }
 
     }
-   else if(!strcmp($_POST['type'], "2")){
+   else if(!strcmp(mysql_real_escape_string($_POST['type']), "2")){
         $correspond=array("高"=>'1',"次高"=>'2',"中"=>'3',"次低"=>'4',"低"=>'5');
         $result_global_A=array('1'=>"0","2"=>"0",'3'=>"0",'4'=>"0",'5'=>"0");
         $result_global_B=array('1'=>"0","2"=>"0",'3'=>"0",'4'=>"0",'5'=>"0");
@@ -146,17 +146,17 @@
             echo $string;
     }
 
-    else if(!strcmp($_POST['type'], "3")){
+    else if(!strcmp(mysql_real_escape_string($_POST['type']), "3")){
         $correspond=array("finan_load"=>'finan_count',"sale_load"=>'sale_count',"human_load"=>'human_count',"research_load"=>'research_count');
         $correspond_2=array("finan"=>"財務人員",'sale'=>"行銷與業務人員",'human'=>"行政人員",'research'=>"研發團隊");
         $temp_result=mysql_query("SELECT `name`,`value` FROM `parameter_description` WHERE  `name`='finan_load' OR `name`='research_load' OR `name`='human_load' OR `name`='sale_load';",$connect);
         $result_temp=mysql_fetch_array($temp_result);
-        $min=$result_temp['value']*$_POST[$correspond[$result_temp['name']]];
+        $min=$result_temp['value']*mysql_real_escape_string($_POST[$correspond[$result_temp['name'])]];
         $dep="";
         $avg_load=0;
         while($result_temp=mysql_fetch_array($temp_result)){
-            if($result_temp['value']*$_POST[$correspond[$result_temp['name']]]<$min){
-                $min=$result_temp['value']*$_POST[$correspond[$result_temp['name']]];
+            if($result_temp['value']*mysql_real_escape_string($_POST[$correspond[$result_temp['name'])]]<$min){
+                $min=$result_temp['value']*mysql_real_escape_string($_POST[$correspond[$result_temp['name'])]];
                 $dep_temp=explode('_',$result_temp['name']);
                 $dep=$correspond_2[$dep_temp['0']];
             }

@@ -15,8 +15,8 @@ include("./connMysql.php");
 
 //------------------------- 驗證ceo的帳號是否重複申請 -------------------------
 
-if(isset($_POST["c"])){
-	$manAcc=$_POST["c"];
+if(isset(mysql_real_escape_string($_POST["c"]))){
+	$manAcc=mysql_real_escape_string($_POST["c"]);
 	
 	if (!@mysql_select_db("testabc_login")) die("資料庫選擇失敗11111!");
 	{
@@ -83,7 +83,7 @@ if(isset($_POST["c"])){
 }
 
 //------------------------- register值傳入DB -------------------------
-if(isset($_POST["action"])&&($_POST["action"]=="add")){
+if(isset(mysql_real_escape_string($_POST["action"]))&&(mysql_real_escape_string($_POST["action"])=="add")){
 	
 		if (!mysql_select_db("testabc_login")) die("資料庫選擇失敗22222！");
 		{ 
@@ -91,16 +91,16 @@ if(isset($_POST["action"])&&($_POST["action"]=="add")){
         	$result1 = mysql_query($sql1) or die("Query failed");
 			$num_rows1 = mysql_num_rows($result1);
 			
-	  	    $cName=$_POST["cName"];
-			$cid=$_POST["ccid"];
-			$password=$_POST["Password"];
+	  	    $cName=mysql_real_escape_string($_POST["cName"]);
+			$cid=mysql_real_escape_string($_POST["ccid"]);
+			$password=mysql_real_escape_string($_POST["Password"]);
 			
 			for($i=1;$i<=7;$i++)
 			{	
-		    	$account=$_POST["acc{$i}"];	
+		    	$account=mysql_real_escape_string($_POST["acc{$i}"]);	
 			 
 				$sql_query = "INSERT INTO `account` (`Account`,`Password`,`CompanyID`,`CompanyName`) VALUES (";
-				if($_POST["acc{$i}"]!=""){
+				if(mysql_real_escape_string($_POST["acc{$i}"])!=""){
 		     	 	$sql_query .= "'".$account."',";
 				 	$sql_query .= "'".md5($password)."',";
 				 	$sql_query .= "'".$cid."',";
@@ -134,13 +134,13 @@ if(isset($_POST["action"])&&($_POST["action"]=="add")){
 
 
 //---------------------------- 驗證login ----------------------------
-if(isset($_POST["action"])&&($_POST["action"]=="login")){
+if(isset(mysql_real_escape_string($_POST["action"]))&&(mysql_real_escape_string($_POST["action"])=="login")){
 	
 	if (!@mysql_select_db("testabc_main")) die("資料庫選擇失敗33333！");
 	{   
 	
-		$account=$_POST["playerID"];	
-		$password=$_POST["playerPW"];
+		$account=mysql_real_escape_string($_POST["playerID"]);	
+		$password=mysql_real_escape_string($_POST["playerPW"]);
 		echo $account."|".$password;
 		
 		//將user account 存入session

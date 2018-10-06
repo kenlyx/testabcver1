@@ -72,7 +72,7 @@ $order = mysql_query("SELECT * FROM order_accept ORDER BY `index`");
 </table>
 <?php
 }
-    report($_POST['year']);
+    report(mysql_real_escape_string($_POST['year']));
 
 ?>
 

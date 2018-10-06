@@ -321,5 +321,5 @@ function print_price($num,$place,$underline){//$place判斷左右欄(最新版�
 	}
 	echo $echo_string1.number_format($num).$echo_string2;
 }
-report($_SESSION['cid'],$_POST['type'],$_POST['month']);
+report($_SESSION['cid'],mysql_real_escape_string($_POST['type']),mysql_real_escape_string($_POST['month']));
 ?>

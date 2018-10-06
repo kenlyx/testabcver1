@@ -221,7 +221,7 @@ document.all["show"].value ="\n" + str;
 <!--<script>
 
 /*function myFunction()
-{alert(//php echo $_POST['process']?>);
+{alert(//php echo mysql_real_escape_string($_POST['process'])?>);
 var x;
 var r=confirm("Press a button!");
 if (r==true)

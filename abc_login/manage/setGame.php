@@ -11,9 +11,9 @@ if (!$seldb) die("資料庫選擇失敗！");
 
 if(isset($_GET["action"]) && $_GET["action"]=="set"){
 	
-	$courseN=$_POST["courseName"];
-	$courseT=$_POST["courseTeacher"];
-	$gameN=$_POST["gameName"];
+	$courseN=mysql_real_escape_string($_POST["courseName"]);
+	$courseT=mysql_real_escape_string($_POST["courseTeacher"]);
+	$gameN=mysql_real_escape_string($_POST["gameName"]);
 	$sql_query = "INSERT INTO `game` (`index`,`CourseName`,`CourseTeacher`,`GameName`) VALUES (";
 		if($courseN!="" and $courseT!="" and $gameN!=""){
 			 $sql_query .= "'',";

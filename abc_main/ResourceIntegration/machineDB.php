@@ -102,8 +102,8 @@
             }
         }
     }//end if(type=purchase)
-	else if($_POST["sell"]){
-		$sell_machine=$_POST['sell'];
+	else if(mysql_real_escape_string($_POST["sell"])){
+		$sell_machine=mysql_real_escape_string($_POST['sell']);
 		$count=count($sell_machine);
 		//echo $sell_machine[0]."|".$sell_machine[1];
 		$i=0;

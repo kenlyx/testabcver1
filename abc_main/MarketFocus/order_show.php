@@ -3,7 +3,7 @@
     $connect = mysql_connect("localhost", "root", "53g4ek7abc") or die(mysql_error());
     mysql_select_db("testabc_main", $connect);
     mysql_query("set names 'utf8'");
-    $b_or_c=$_POST['type'];
+    $b_or_c=mysql_real_escape_string($_POST['type']);
     $temp=mysql_query("SELECT * FROM `order_detail`",$connect);
     $result=  mysql_fetch_array($temp);
     $str="";
@@ -50,13 +50,13 @@
                 else if($result['service']==5)
                     $service="低";
                 if($b_or_c==0){
-                    if($result['type']==$_POST['rank']){
+                    if($result['type']==mysql_real_escape_string($_POST['rank'])){
                         $product_result=explode('_',$result['order_no']);
                        	if((!strcmp($product_result[1],"A"))&&($RD_done_A==1)&&(
 						$result['quality']>=$ohya))//判斷A產品
-                            $str.="".$result['name'].","."訂單編號： ".$result['order_no'].","."下單時間： 第".$result['year']."年 ".$result['month']."月,"."品質需求： ".$quality.","."服務需求： ".$service.","."訂貨量： ".$result['quantity'].","."剩餘時間： ".$result['postpone']."個月".",".$_POST['rank'].";";
+                            $str.="".$result['name'].","."訂單編號： ".$result['order_no'].","."下單時間： 第".$result['year']."年 ".$result['month']."月,"."品質需求： ".$quality.","."服務需求： ".$service.","."訂貨量： ".$result['quantity'].","."剩餘時間： ".$result['postpone']."個月".",".mysql_real_escape_string($_POST['rank']).";";
                         else if(!strcmp($product_result[1],"B")&&$RD_done_B==1&&($result['quality']>=$ohya1))//判斷為B產品
-                            $str.="".$result['name'].","."訂單編號： ".$result['order_no'].","."下單時間： 第".$result['year']."年 ".$result['month']."月,"."品質需求： ".$quality.","."服務需求： ".$service.","."訂貨量： ".$result['quantity'].","."剩餘時間： ".$result['postpone']."個月".",".$_POST['rank'].";";
+                            $str.="".$result['name'].","."訂單編號： ".$result['order_no'].","."下單時間： 第".$result['year']."年 ".$result['month']."月,"."品質需求： ".$quality.","."服務需求： ".$service.","."訂貨量： ".$result['quantity'].","."剩餘時間： ".$result['postpone']."個月".",".mysql_real_escape_string($_POST['rank']).";";
                     }
                 }
                 else{

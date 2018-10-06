@@ -236,5 +236,5 @@
 		mysql_close($connect);
 		mysql_close($obj);
 	}
-	report($_SESSION['cid'],$_POST['type'],$_POST['month']);
+	report($_SESSION['cid'],mysql_real_escape_string($_POST['type']),mysql_real_escape_string($_POST['month']));
 ?>

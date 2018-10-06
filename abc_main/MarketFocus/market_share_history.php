@@ -66,5 +66,5 @@
             }
             echo "</tr></table>";
 	}
-	market_share_history($_POST['type'],$_POST['month']);
+	market_share_history(mysql_real_escape_string($_POST['type']),mysql_real_escape_string($_POST['month']));
 ?>

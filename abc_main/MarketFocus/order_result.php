@@ -75,11 +75,11 @@ function report($month) {
     echo "</table>";
 }
 
-if (!strcmp($_POST['month'], "now")) {
+if (!strcmp(mysql_real_escape_string($_POST['month']), "now")) {
     $month = $_SESSION['month'];                               //之後在這裡從資料庫中讀出確切月份
     $year=$_SESSION['year'];
     echo ($year-1)*12+(int)$month;
 } else {
-    report($_POST['month']);
+    report(mysql_real_escape_string($_POST['month']));
 }
 ?>

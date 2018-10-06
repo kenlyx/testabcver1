@@ -41,10 +41,10 @@ if(isset($_GET["action"])&&$_GET["action"]=="upload"){
 		$filename=$_FILES["upload"]["name"];
 		$s=explode('.',$_FILES["upload"]["name"]);
 		$filenameonly=$s[0];
-		move_uploaded_file($_FILES["upload"]["tmp_name"], $_POST["dir"]."\\uploads\\".$_FILES["upload"]["name"]);
+		move_uploaded_file($_FILES["upload"]["tmp_name"], mysql_real_escape_string($_POST["dir"])."\\uploads\\".$_FILES["upload"]["name"]);
 	}
 	//重新轉頁到目前目錄中
-	//header("Location: ?dir=".$_POST["dir"]);
+	//header("Location: ?dir=".mysql_real_escape_string($_POST["dir"]));
 	
 	
 // Test CVS

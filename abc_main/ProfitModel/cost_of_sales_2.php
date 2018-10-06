@@ -56,5 +56,5 @@ function cost_of_sales($type, $month) {//印出報表的主程式
     echo "</tr></table>";
 }
 
-cost_of_sales($_POST['type'], $_POST['month']);
+cost_of_sales(mysql_real_escape_string($_POST['type']), mysql_real_escape_string($_POST['month']));
 ?>

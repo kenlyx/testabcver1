@@ -125,12 +125,12 @@ $row_machine = mysql_fetch_array($machine_result);*/
 //$row_result2 = mysql_fetch_assoc($result_machine);
 //$sql="INSERT INTO Persons (FirstName, LastName, Age)
 //VALUES
-//('$_POST[firstname]','$_POST[lastname]','$_POST[age]')";
+//('mysql_real_escape_string($_POST[firstname])','mysql_real_escape_string($_POST[lastname])','mysql_real_escape_string($_POST[age])')";
 
 
 
 $sql="INSERT INTO production (SupA_ProductA ,SupB_ProductA ,SupC_ProductA ,SupA_ProductB ,SupB_ProductB,SupC_ProductB)
-VALUES ('$_POST[SupA_ProductA]','$_POST[SupB_ProductA]','$_POST[SupC_ProductA]','$_POST[SupA_ProductB]','$_POST[SupB_ProductB]','$_POST[SupC_ProductB]')";
+VALUES ('mysql_real_escape_string($_POST[SupA_ProductA])','mysql_real_escape_string($_POST[SupB_ProductA])','mysql_real_escape_string($_POST[SupC_ProductA])','mysql_real_escape_string($_POST[SupA_ProductB])','mysql_real_escape_string($_POST[SupB_ProductB])','mysql_real_escape_string($_POST[SupC_ProductB])')";
 
 /*$result_spAM = mysql_query($spAM_query);
 $spBM_query = "SELECT `SupB_Monitor` FROM `production` WHERE `cid`='Test'"; 
